@@ -1,0 +1,36 @@
+/* Empty. Add your own CSS if you like */
+
+.page-title {
+	margin-top: 10px !important;
+	margin: 8px auto;
+	text-align: center;
+}
+
+.search-type, .info-tag {
+	font-size: 0.90em;
+	background-color: #D3EFFF;
+	padding: 2px 5px;
+	margin-left: 2px;
+	margin-right: 2px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;	
+}
+
+.info-tag a {
+	text-decoration: none;
+	color: #444;
+}
+
+.company-profile {
+	padding: 20px;
+}
+
+.company-profile div {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.company-profile label {
+	font-weight: bold;
+}

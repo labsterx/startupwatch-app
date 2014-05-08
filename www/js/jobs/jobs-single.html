@@ -1,0 +1,46 @@
+<ion-view title="Job">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+  	<div style='padding: 10px'>
+	    <h2>{{job.title}}</h2>
+
+      <!-- Startup Name -->
+      <div ng-show="job.startup.name">
+        <strong>Company: </strong>
+        <span class="info-tag">
+            <a ng-href="#/app/startup/{{job.startup.id}}">{{job.startup.name}}</a>
+         </span>
+      </div>
+
+      <div class="row" ng-show="job.job_location.name || job.job_role.name">
+        <!-- Location -->
+        <div class="col" ng-show="job.job_location.name"><i class="icon ion-location"></i> 
+          <span class="info-tag">
+            <a href="#/app/jobs/tag/{{job.job_location.tag}}">{{job.job_location.name}}</a>
+          </span>
+        </div>
+        <!-- Job Role -->
+        <div class="col" ng-show="job.job_role.name"><i class="icon ion-person"></i> 
+          {{job.job_role.name}}
+        </div>
+      </div>
+
+      <div class="row" ng-show="job.salary_min || job.salary_max">
+        <div class="col"><i class="icon ion-pricetag"></i> {{job.currency_code}} {{job.salary_min}} - {{job.salary_max}}</div>
+      </div> 
+
+      <div ng-show="!!job.skill_list.length">
+          <span class="info-tag" ng-repeat="skill in job.skill_list">
+            <a href="#/app/jobs/tag/{{skill.tag}}">{{skill.name}}</a>
+          </span>
+     </div>
+
+	    <div>
+	    {{job.startup.product_desc}}
+	    </div>
+
+    </div>
+  </ion-content>
+</ion-view>

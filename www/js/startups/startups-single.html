@@ -1,0 +1,42 @@
+<ion-view title="Startup Profile">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+  	<div class="company-profile">
+	    <h2>{{startup.name}}</h2>
+	    
+	    <div ng-show="startup.logo_url">
+	    	<img ng-src="{{startup.logo_url}}" />
+	    </div>
+
+	    <div ng-show="!!startup.locations.length">
+	    	<label>Location:</label> 
+	    	<span class="info-tag" ng-repeat="location in startup.locations" >
+	    		<a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
+	    	</span>
+	    </div>	
+
+	    <div ng-show="!!startup.company_type.length">
+	    	<label>Company Type:</label>
+	    	<span class="info-tag" ng-repeat="company_type in startup.company_type">
+	    		{{company_type.display_name}}
+	    	</span>
+	    </div>	
+
+	    <div ng-show="!!startup.markets.length">
+	    	<label>Markets:</label>
+	    	<span class="info-tag" ng-repeat="market in startup.markets">
+	    		<a href="#/app/startups/tag/{{market.id}}">{{market.display_name}}</a>
+	    	</span>
+	    </div>	
+
+	    <div ng-show="!!startup.product_desc || !!startup.high_concept">
+	    	<p><label>About:</label></p>
+	    	<p ng-show="!!startup.high_concept"><strong>{{startup.high_concept}}</strong></p>
+	    	<p ng-show="!!startup.product_desc">{{startup.product_desc}}</p>
+	    </div>
+
+    </div>
+  </ion-content>
+</ion-view>

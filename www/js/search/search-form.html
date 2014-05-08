@@ -1,0 +1,46 @@
+<ion-view title="Search">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
+  
+    <h2 class="page-title">Search</h2>
+  
+    <div class="list list-inset padding">
+		<label class="item item-input">
+			<i class="icon ion-search placeholder-icon"></i>
+			<input type="text" placeholder="Search" ng-model="search.query">
+		</label>
+
+		<div class="padding" style='margin: 8px auto; text-align:center'>
+			<button class="button button-dark" ng-disabled="!search.query" ng-click="doSearch('Startup')">
+	  			Startup Search
+			</button>
+			<button class="button button-dark" ng-disabled="!search.query" ng-click="doSearch('LocationTag')">
+	  			Location Search
+			</button>
+			<button class="button button-dark" ng-disabled="!search.query" ng-click="doSearch('MarketTag')">
+	  			Market Search
+			</button>
+		</div>
+	</div>
+
+	<div class="card" ng-show="no_results">
+	  <div class="item item-text-wrap">
+	    Sorry, no results. Please try again.
+	  </div>
+	</div>	
+
+	<div class="list card" ng-show="!!results.length">
+      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in results" >
+      	<i class="icon {{result.icon}}"></i>
+        {{result.name}}
+        <i class="icon ion-ios7-arrow-right"></i>
+      </a>
+	<div>
+
+
+
+  </ion-content>
+</ion-view>
