@@ -6,39 +6,43 @@
 
   <ion-content class="has-header">
 
-  <div class="card" ng-repeat="job in jobs" href="href="#/app/job/{{job.id}}>
-    
-    <a href="#/app/job/{{job.id}}" class="item item-divider item-icon-right">
-      {{job.title}}
-      <i class="icon ion-ios7-arrow-right"></i>
-    </a>
-    
-    <div class="item item-text-wrap">
+    <div class="card" ng-repeat="job in jobs" href="href="#/app/job/{{job.id}}>
       
-      <!-- Startup Name -->
-      <div ng-show="job.startup.name">
-        <strong>Company: </strong> {{job.startup.name}}
+      <a href="#/app/job/{{job.id}}" class="item item-divider item-icon-right">
+        {{job.title}}
+        <i class="icon ion-ios7-arrow-right"></i>
+      </a>
+      
+      <div class="item item-text-wrap">
+        
+        <!-- Startup Name -->
+        <div ng-show="job.startup.name">
+          <strong>Company: </strong> {{job.startup.name}}
+        </div>
+
+        <div class="row" ng-show="job.job_location.name || job.job_role.name">
+          <!-- Location -->
+          <div class="col" ng-show="job.job_location.name"><i class="icon ion-location"></i> 
+            <span class="info-tag">
+              <a href="#/app/jobs/tag/{{job.job_location.tag}}">{{job.job_location.name}}</a>
+            </span>
+          </div>
+          <!-- Job Role -->
+          <div class="col" ng-show="job.job_role.name"><i class="icon ion-person"></i> 
+            {{job.job_role.name}}
+          </div>
+        </div>
+
+        <div class="row" ng-show="job.salary_min || job.salary_max">
+          <div class="col"><i class="icon ion-pricetag"></i> {{job.currency_code}} {{job.salary_min}} - {{job.salary_max}}</div>
+        </div> 
+      
       </div>
 
-      <div class="row" ng-show="job.job_location.name || job.job_role.name">
-        <!-- Location -->
-        <div class="col" ng-show="job.job_location.name"><i class="icon ion-location"></i> 
-          <span class="info-tag">
-            <a href="#/app/jobs/tag/{{job.job_location.tag}}">{{job.job_location.name}}</a>
-          </span>
-        </div>
-        <!-- Job Role -->
-        <div class="col" ng-show="job.job_role.name"><i class="icon ion-person"></i> 
-          {{job.job_role.name}}
-        </div>
-      </div>
-
-      <div class="row" ng-show="job.salary_min || job.salary_max">
-        <div class="col"><i class="icon ion-pricetag"></i> {{job.currency_code}} {{job.salary_min}} - {{job.salary_max}}</div>
-      </div> 
-    
     </div>
-  </div>
+
+    <ion-infinite-scroll on-infinite="loadJobs()" distance="1%">
+    </ion-infinite-scroll>
 
   </ion-content>
 

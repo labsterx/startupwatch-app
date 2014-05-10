@@ -41,10 +41,17 @@ angular.module('myApp.jobs', [
 
 	'use strict';
 
-	function processListResult (results) {
+	function processListResult (data) {
+		var results = {};
+		var meta = {
+			total: data.total,
+			per_page: data.per_page,
+			page: data.page,
+			last_page: data.last_page,
+		};
 		var list = [];
-		for (var i=0; i<results.jobs.length; i++) {
-			var item = results.jobs[i];
+		for (var i=0; i<data.jobs.length; i++) {
+			var item = data.jobs[i];
 			for (var j=0; j<item.tags.length; j++) {
 				var tag = item.tags[j];
 				if (tag.tag_type == 'LocationTag') {
@@ -62,7 +69,9 @@ angular.module('myApp.jobs', [
 			}
 			list.push(item);
 		}
-		return list;
+		results.meta = meta;
+		results.jobs = list;
+		return results;
 	}
 
 	function processJobResult (result) {
@@ -93,11 +102,12 @@ angular.module('myApp.jobs', [
 
 	return {
 
-		listJobs: function (callback) {
-			var url = 'https://api.angel.co/1/jobs' + '?callback=JSON_CALLBACK';
-			$http.jsonp(url).success(function(results) {
-				var list = processListResult(results);
-				callback(list);
+		listJobs: function (page, callback) {
+			var url = 'https://api.angel.co/1/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
+			console.log('Calling' + url);
+			$http.jsonp(url).success(function(data) {
+				var results = processListResult(data);
+				callback(results);
 			});
 		},
 
@@ -125,21 +135,41 @@ angular.module('myApp.jobs', [
 	function ($scope, JobsService, $ionicLoading) {
 
 		$scope.loadJobs = function() {
+			if ($scope.meta.page && $scope.meta.last_page) {
+				if ($scope.meta.page < $scope.meta.last_page) {
+					page = $scope.meta.page + 1;
+				}
+				else {
+					return;
+				}
+			}
+			else {
+				page = 1;
+			}
+			console.log('Load Jobs. page=' + page);
 			$ionicLoading.show({
 				template: 'Loading...'
 			});	
-    		JobsService.listJobs(function(results){
+    		JobsService.listJobs(page, function(results){
 				$ionicLoading.hide();
-				$scope.jobs = results;
+				$scope.jobs = $scope.jobs.concat(results.jobs);
+				$scope.meta = results.meta;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};
 
-		$scope.loadJob = function() {
-
+		$scope.loadMore = function() {
+			console.log('loadMore');
+			console.log($scope.meta);
+			if ($scope.meta && ($scope.meta.page < $scope.meta.last_page)) {
+				var nextPage = $scope.meta.page + 1;
+				$scope.loadJobs(nextPage);
+			}
 		}
 
-		$scope.loadJobs();
-
+		$scope.jobs = [];
+		$scope.meta = [];
+		// $scope.loadJobs();
 	}
 
 ])
