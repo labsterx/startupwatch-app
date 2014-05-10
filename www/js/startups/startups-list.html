@@ -6,13 +6,23 @@
 
   <ion-content class="has-header">
 
-    <div class="list card" ng-show="!!startups.length">
-      <a href="#/app/startup/{{startup.id}}" class="item item-icon-left item-icon-right" ng-show="!!startup.name" ng-repeat="startup in startups" >
-        <i class="icon ion-document-text"></i>
-        {{startup.name}}
-        <i class="icon ion-ios7-arrow-right"></i>
-      </a>
+    <div class="list" ng-show="!!startups.length">
+      <div class="item item-icon-left item-icon-right"  style="top: 10px; left: 10px; right: 10px;" collection-repeat="startup in startups" collection-item-width="'100%'" collection-item-height="60">
+        
+          <i class="icon ion-document-text"></i>
+          <a href="#/app/startup/{{startup.id}}" style="text-decoration: none; color: #444">{{startup.name}}</a>
+        
+          <span class="info-tag" ng-repeat="location in startup.locations">
+              <a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
+          </span>
+
+          <i class="icon ion-ios7-arrow-right"></i>
+
+      </div>
     <div>
+
+    <ion-infinite-scroll ng-if="!!meta.page && meta.page < meta.last_page" icon="" on-infinite="loadStartups()" distance="1%">
+    </ion-infinite-scroll>
     
   </ion-content>
 

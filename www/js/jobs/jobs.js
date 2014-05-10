@@ -104,15 +104,15 @@ angular.module('myApp.jobs', [
 
 		listJobs: function (page, callback) {
 			var url = 'https://api.angel.co/1/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
-			console.log('Calling' + url);
+			// console.log('Calling ' + url);
 			$http.jsonp(url).success(function(data) {
 				var results = processListResult(data);
 				callback(results);
 			});
 		},
 
-		listJobsByTag: function (tagId, callback) {
-			var url = 'https://api.angel.co/1/tags/' + tagId + '/jobs' + '?callback=JSON_CALLBACK';
+		listJobsByTag: function (page, tagId, callback) {
+			var url = 'https://api.angel.co/1/tags/' + tagId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
 			$http.jsonp(url).success(function(results) {
 				var list = processListResult(results);
 				callback(list);
@@ -136,9 +136,9 @@ angular.module('myApp.jobs', [
 
 		$scope.jobs = [];
 		$scope.meta = {};
-		$scope.loading = false;
 
 		$scope.loadJobs = function() {
+			var page;
 			if ($scope.meta.page && $scope.meta.last_page) {
 				if ($scope.meta.page < $scope.meta.last_page) {
 					page = $scope.meta.page + 1;
@@ -150,23 +150,17 @@ angular.module('myApp.jobs', [
 			else {
 				page = 1;
 			}
-			console.log('Load Jobs. page=' + page);
+			// console.log('Load Jobs. page=' + page);
 			$ionicLoading.show({
 				template: 'Loading...'
 			});
-			$scope.loading = true;	
     		JobsService.listJobs(page, function(results){
-    			$scope.loading = false;
 				$ionicLoading.hide();
 				$scope.jobs = $scope.jobs.concat(results.jobs);
 				$scope.meta = results.meta;
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};
-
-		// $scope.$on('stateChangeSuccess', function() {
-		//     $scope.loadJobs();
-		//  });
 
 		$scope.loadJobs();
 	}
@@ -177,16 +171,33 @@ angular.module('myApp.jobs', [
 	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 
 	function ($scope, JobsService, $stateParams, $ionicLoading) {
 
+		$scope.jobs = [];
+		$scope.meta = {};
+
 		$scope.loadJobs = function() {
 
 			var tagId = $stateParams.tagId;
+			var page;
+			if ($scope.meta.page && $scope.meta.last_page) {
+				if ($scope.meta.page < $scope.meta.last_page) {
+					page = $scope.meta.page + 1;
+				}
+				else {
+					return;
+				}
+			}
+			else {
+				page = 1;
+			}
 
 			$ionicLoading.show({
 				template: 'Loading...'
 			});	
-    		JobsService.listJobsByTag(tagId, function(results){
+    		JobsService.listJobsByTag(page, tagId, function(results){
 				$ionicLoading.hide();
-				$scope.jobs = results;
+				$scope.jobs = $scope.jobs.concat(results.jobs);
+				$scope.meta = results.meta;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};
 
