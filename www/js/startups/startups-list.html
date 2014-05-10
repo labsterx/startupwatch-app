@@ -4,22 +4,47 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
 
-  <ion-content class="has-header">
+  <ion-content class="has-header bg-gray">
 
-    <div class="list" ng-show="!!startups.length">
-      <div class="item item-icon-left item-icon-right"  style="top: 10px; left: 10px; right: 10px;" collection-repeat="startup in startups" collection-item-width="'100%'" collection-item-height="60">
+    <div class="list">
+      
+      <item class="item item-thumbnail-left" href="#/app/startup/{{startup.id}}" style="top: 10px; left: 10px; right: 10px;" collection-repeat="startup in startups" collection-item-width="'100%'" collection-item-height="150" ng-click="showStartupPage(startup)">
+      
+      <img ng-show="startup.thumb_url" src="{{startup.thumb_url}}" />
+
+      <div>
+        <!-- company name -->
+        <span class="list-item-title">{{startup.name}}</span>
+        <!-- locations -->
+        <span class="info-tag" ng-show="startup.locations.length" ng-repeat="location in startup.locations">
+            <a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
+        </span>
+      </div>
+
+
         
-          <i class="icon ion-document-text"></i>
-          <a href="#/app/startup/{{startup.id}}" style="text-decoration: none; color: #444">{{startup.name}}</a>
-        
-          <span class="info-tag" ng-repeat="location in startup.locations">
-              <a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
+        <div>
+          <!-- High Concept -->
+          <p ng-show="startup.high_concept">
+          {{startup.high_concept}}
+          </p>
+
+        <p ng-show="startup.markets.length">
+          <strong>Markets:</strong> <span class="info-tag" ng-repeat="market in startup.markets">
+              <a href="#/app/startups/tag/{{market.id}}">{{market.display_name}}</a>
           </span>
+        </p>
 
-          <i class="icon ion-ios7-arrow-right"></i>
+        <p ng-show="startup.created_at" class="list-item-small italic pull-right">
+          <i>{{startup.created_at | date: 'mediumDate'}}</i>
+        </p> 
 
       </div>
-    <div>
+
+    
+
+    </item><!-- /item -->
+
 
     <ion-infinite-scroll ng-if="!!meta.page && meta.page < meta.last_page" icon="" on-infinite="loadStartups()" distance="1%">
     </ion-infinite-scroll>

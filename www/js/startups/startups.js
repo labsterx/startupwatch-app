@@ -37,7 +37,7 @@ angular.module('myApp.startups', [
 
 })
 
-.factory('StartupsService', function ($http) {
+.factory('StartupsService', function ($http, $location) {
 
 	'use strict';
 
@@ -63,9 +63,10 @@ angular.module('myApp.startups', [
 
 	return {
 
-		// HACK!!!!!
 		listStartups: function (page, callback) {
-			var url = 'https://api.angel.co/1/tags/1654/startups' + '?page=' + page + '&callback=JSON_CALLBACK';
+			var tag_earth = '1643';
+			var url = 'https://api.angel.co/1/tags/' + tag_earth + '/startups' + '?page=' + page + '&order=desc&callback=JSON_CALLBACK';
+			console.log('Calling ' + url);
 			$http.jsonp(url).success(function(data) {
 				var results = processListResult(data);
 				callback(results);
@@ -92,8 +93,8 @@ angular.module('myApp.startups', [
 })
 
 .controller('StartupsController', [
-	'$scope', 'StartupsService', '$ionicLoading',
-	function ($scope, StartupsService, $ionicLoading) {
+	'$scope', 'StartupsService', '$ionicLoading', '$location',
+	function ($scope, StartupsService, $ionicLoading, $location) {
 
 		$scope.startups = [];
 		$scope.meta = {};
@@ -123,6 +124,8 @@ angular.module('myApp.startups', [
 			});
 		};
 
+		$scope.changeUrl = StartupsService.changeUrl;
+
 		$scope.loadStartups();
 
 	}
@@ -130,8 +133,8 @@ angular.module('myApp.startups', [
 ])
 
 .controller('StartupsTagController', [
-	'$scope', 'StartupsService', '$stateParams', '$ionicLoading', 
-	function ($scope, StartupsService, $stateParams, $ionicLoading) {
+	'$scope', 'StartupsService', '$stateParams', '$ionicLoading', '$location',
+	function ($scope, StartupsService, $stateParams, $ionicLoading, $location) {
 
 		$scope.startups = [];
 		$scope.meta = {};
@@ -162,6 +165,11 @@ angular.module('myApp.startups', [
 			});
 		};
 
+		$scope.showStartupPage = function(startup) {
+			var path = "/app/startup/" + startup.id;
+			$location.path( path );
+		}
+
 		$scope.loadStartups();
 
 	}
@@ -184,6 +192,11 @@ angular.module('myApp.startups', [
 				$scope.startup = results;
 			});
 		};
+
+		$scope.showStartupPage = function(startup) {
+			var path = "/app/startup/" + startup.id;
+			$location.path( path );
+		}
 
 		$scope.loadStartup();
 

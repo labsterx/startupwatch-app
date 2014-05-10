@@ -1,5 +1,18 @@
 /* Empty. Add your own CSS if you like */
 
+/* general */
+.italic {
+	font-style:italic;
+}
+
+.pull-right {
+	float:right;
+}
+
+.bg-gray {
+	background-color: #EDEDED;
+}
+
 .page-title {
 	margin-top: 10px !important;
 	margin: 8px auto;
@@ -34,3 +47,24 @@
 .company-profile label {
 	font-weight: bold;
 }
+
+/* list */
+
+.list-item-title {
+	font-weight: bold;
+	font-size: 1.0em;
+}
+
+.list-item-title i.icon {
+	color: #CCC;
+	font-size: 1.5em;
+}
+
+.list-item-content {
+	font-size: 0.90em;
+}
+
+.list-item-small {
+	font-size: 0.80em !important;
+}
+
