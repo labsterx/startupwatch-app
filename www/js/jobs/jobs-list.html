@@ -6,7 +6,9 @@
 
   <ion-content class="has-header">
 
-    <div class="card" ng-repeat="job in jobs" href="href="#/app/job/{{job.id}}>
+  <div class="job_list" style="text-align:center; width: 100%">
+
+    <div class="card" collection-repeat="job in jobs" collection-item-width="'100%'" collection-item-height="190" style="width:96%; text-align:left" ng-style="{height: 190}" href="href="#/app/job/{{job.id}}>
       
       <a href="#/app/job/{{job.id}}" class="item item-divider item-icon-right">
         {{job.title}}
@@ -43,6 +45,8 @@
 
     <ion-infinite-scroll on-infinite="loadJobs()" distance="1%">
     </ion-infinite-scroll>
+
+  </div>
 
   </ion-content>
 
