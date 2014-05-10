@@ -134,6 +134,10 @@ angular.module('myApp.jobs', [
 	'$scope', 'JobsService', '$ionicLoading',
 	function ($scope, JobsService, $ionicLoading) {
 
+		$scope.jobs = [];
+		$scope.meta = {};
+		$scope.loading = false;
+
 		$scope.loadJobs = function() {
 			if ($scope.meta.page && $scope.meta.last_page) {
 				if ($scope.meta.page < $scope.meta.last_page) {
@@ -149,8 +153,10 @@ angular.module('myApp.jobs', [
 			console.log('Load Jobs. page=' + page);
 			$ionicLoading.show({
 				template: 'Loading...'
-			});	
+			});
+			$scope.loading = true;	
     		JobsService.listJobs(page, function(results){
+    			$scope.loading = false;
 				$ionicLoading.hide();
 				$scope.jobs = $scope.jobs.concat(results.jobs);
 				$scope.meta = results.meta;
@@ -158,18 +164,11 @@ angular.module('myApp.jobs', [
 			});
 		};
 
-		$scope.loadMore = function() {
-			console.log('loadMore');
-			console.log($scope.meta);
-			if ($scope.meta && ($scope.meta.page < $scope.meta.last_page)) {
-				var nextPage = $scope.meta.page + 1;
-				$scope.loadJobs(nextPage);
-			}
-		}
+		// $scope.$on('stateChangeSuccess', function() {
+		//     $scope.loadJobs();
+		//  });
 
-		$scope.jobs = [];
-		$scope.meta = [];
-		// $scope.loadJobs();
+		$scope.loadJobs();
 	}
 
 ])
