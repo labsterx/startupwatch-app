@@ -15,29 +15,33 @@
       <div>
         <!-- company name -->
         <span class="list-item-title">{{startup.name}}</span>
-        <!-- locations -->
-        <span class="info-tag" ng-show="startup.locations.length" ng-repeat="location in startup.locations">
-            <a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
-        </span>
       </div>
 
 
         
-        <div>
+       <div class="list-item-content">
           <!-- High Concept -->
           <p ng-show="startup.high_concept">
           {{startup.high_concept}}
           </p>
 
-        <p ng-show="startup.markets.length">
-          <strong>Markets:</strong> <span class="info-tag" ng-repeat="market in startup.markets">
-              <a href="#/app/startups/tag/{{market.id}}">{{market.display_name}}</a>
+        <p ng-show="startup.locations.length">
+          <strong>Location:</strong> 
+          <span class="info-tag" ng-show="startup.locations.length" ng-repeat="location in startup.locations">
+            <a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
+          </span>
           </span>
         </p>
 
-        <p ng-show="startup.created_at" class="list-item-small italic pull-right">
-          <i>{{startup.created_at | date: 'mediumDate'}}</i>
-        </p> 
+        <p ng-show="startup.company_size || startup.created_at">
+          <span ng-show="startup.company_size">
+          <strong>Size:</strong> 
+            {{startup.company_size}}
+          </span>
+          <span ng-show="startup.created_at" class="list-item-small italic pull-right">
+            {{startup.created_at | date: 'mediumDate'}}
+          </span>
+        </p>
 
       </div>
 
