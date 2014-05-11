@@ -45,13 +45,14 @@
           </div>
         </div>
 
-        <div class="row" ng-show="(job.salary_min || job.salary_max) || (job.equity_min || job.equity_min)">
-          <div class="col" ng-show="job.salary_min || job.salary_max">
-            {{job.currency_code}} {{job.salary_min}} - {{job.salary_max}}
-          </div>
-          <div class="col" ng-show="job.equity_min || job.equity_max">
+        <!-- Salary and equity -->
+        <div ng-show="(job.salary_min || job.salary_max) || (job.equity_min || job.equity_min)">
+          <span ng-show="job.salary_min || job.salary_max">
+            {{job.currency_code}} {{job.salary_min}} - {{job.salary_max}}<span ng-show="job.equity_min || job.equity_max">, </span>
+          </span>
+          <span ng-show="job.equity_min || job.equity_max">
             {{job.equity_min}}% - {{job.equity_max}}%
-          </div>
+          </span>
         </div> 
 
         <p ng-show="job.updated_at" class="list-item-small italic pull-right">

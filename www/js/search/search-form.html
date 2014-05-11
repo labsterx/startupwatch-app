@@ -15,7 +15,7 @@
 			</label>
 			<i ng-show="startupSearch.query" class="icon ion-close-circled placeholder-icon input-clear-icon" ng-click="clearStartupSearch()"></i>
 		</div>
-		<div class="padding" style='margin: 8px auto; text-align:center'>
+		<div class="search-button-group">
 			<button class="button button-dark" ng-disabled="!startupSearch.query" ng-click="doStartupSearch('Startup')">
 	  			Startup Search
 			</button>
@@ -53,13 +53,13 @@
 			<i ng-show="jobSearch.query" class="icon ion-close-circled placeholder-icon input-clear-icon" ng-click="clearJobSearch()"></i>
 		</div>
 
-		<div class="padding" style='margin: 8px auto; text-align:center'>
+		<div class="search-button-group">
 			<button class="button button-dark" ng-disabled="!jobSearch.query" ng-click="doJobSearch('LocationTag')">
 	  			Search by Location
 			</button>
-			<button class="button button-dark" ng-disabled="!jobSearch.query" ng-click="doJobSearch('Startup')">
+<!-- 			<button class="button button-dark" ng-disabled="!jobSearch.query" ng-click="doJobSearch('Startup')">
 	  			Search by Company
-			</button>
+			</button> -->
 		</div>
 	</div>
 

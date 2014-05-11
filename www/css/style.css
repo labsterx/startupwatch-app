@@ -26,6 +26,15 @@ i.input-clear-icon {
 	z-index: 10;
 }
 
+.search-button-group {
+	margin: 8px auto; 
+	text-align:center;
+}
+
+.search-button-group button {
+	margin: 4px;
+}
+
 .icon-large {
 	font-size: 32px;
 }
