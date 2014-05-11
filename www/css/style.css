@@ -79,9 +79,35 @@
 	font-size: 0.90em;
 }
 
+.list-item-content i.icon {
+	font-size: 24px;
+	margin-right: 5px;
+}
+
 .list-item-small {
 	font-size: 0.80em !important;
 }
+
+
+.startup-list-item {
+	top: 10px; 
+	left: 10px; 
+	right: 10px;
+	height: 130px;
+}
+
+img.startup-list-logo {
+	margin-top: 8px;
+	padding: 6px;
+	border: 1px solid #DBDBDB;	
+}
+
+.job-list-item {
+	top: 10px; 
+	left: 10px; 
+	right: 10px;
+	height: 180px;
+}	
 
 /* Details */
 
@@ -92,6 +118,7 @@
 .details-body div {
 	margin-top: 5px;
 	margin-bottom: 5px;
+	font-size: 0.90em;
 }
 
 .details-title {
@@ -123,4 +150,13 @@
 	max-width: 100%;
 	border: 1px solid #EDEDED;
 	padding: 10px;
+}
+
+img.job-company-logo {
+	float: left;
+	margin-top: 5px;
+	margin-right: 15px;
+	margin-bottom: 10px;
+	padding: 8px;
+	border: 1px solid #DBDBDB;
 }

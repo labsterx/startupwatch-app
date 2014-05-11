@@ -53,20 +53,20 @@ angular.module('myApp.jobs', [
 		var list = [];
 		for (var i=0; i<data.jobs.length; i++) {
 			var item = data.jobs[i];
+			item.job_skills = [];
+			item.job_roles = [];
+			item.job_locations = [];
 			for (var j=0; j<item.tags.length; j++) {
 				var tag = item.tags[j];
 				if (tag.tag_type == 'LocationTag') {
-					item.job_location = {
-						name: tag.display_name,
-						tag: tag.id
-					};
+					item.job_locations.push(tag);
 				}
 				else if (tag.tag_type == 'RoleTag') {
-					item.job_role = {
-						name: tag.display_name,
-						tag: tag.id
-					};
+					item.job_roles.push (tag);
 				}
+				else if (tag.tag_type == 'SkillTag') {
+					item.job_skills.push(tag);
+				}				
 			}
 			list.push(item);
 		}
@@ -77,25 +77,19 @@ angular.module('myApp.jobs', [
 
 	function processJobResult (result) {
 		var item = result;
-		item.skill_list = [];
+		item.job_skills = [];
+		item.job_roles = [];
+		item.job_locations = [];
 		for (var j=0; j<item.tags.length; j++) {
 			var tag = item.tags[j];
 			if (tag.tag_type == 'LocationTag') {
-				item.job_location = {
-					name: tag.display_name,
-					tag: tag.id
-				};
+				item.job_locations.push(tag);
 			}
 			else if (tag.tag_type == 'RoleTag') {
-				item.job_role = {
-					name: tag.display_name,
-					tag: tag.id
-				};
+				item.job_roles.push (tag);
 			}
 			else if (tag.tag_type == 'SkillTag') {
-				tag.tag = tag.id;
-				tag.name = tag.display_name;
-				item.skill_list.push(tag);
+				item.job_skills.push(tag);
 			}
 		}
 		return item;
@@ -132,8 +126,8 @@ angular.module('myApp.jobs', [
 })
 
 .controller('JobsController', [
-	'$scope', 'JobsService', '$ionicLoading', 'appConfig', 
-	function ($scope, JobsService, $ionicLoading, appConfig) {
+	'$scope', 'JobsService', '$ionicLoading', '$location', 'appConfig', 
+	function ($scope, JobsService, $ionicLoading, $location, appConfig) {
 
 		$scope.jobs = [];
 		$scope.meta = {};
@@ -163,6 +157,11 @@ angular.module('myApp.jobs', [
 			});
 		};
 
+		$scope.showJobPage = function(job) {
+			var path = "/app/job/" + job.id;
+			$location.path( path );
+		}
+
 		$scope.$on('stateChangeSuccess', function() {
 		    $scope.loadJobs();
 		});
@@ -173,8 +172,8 @@ angular.module('myApp.jobs', [
 ])
 
 .controller('JobsTagController', [
-	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 'appConfig',
-	function ($scope, JobsService, $stateParams, $ionicLoading, appConfig) {
+	'$scope', 'JobsService', '$stateParams', '$ionicLoading', '$location', 'appConfig',
+	function ($scope, JobsService, $stateParams, $ionicLoading, $location, appConfig) {
 
 		$scope.jobs = [];
 		$scope.meta = {};
@@ -206,6 +205,11 @@ angular.module('myApp.jobs', [
 			});
 		};
 
+		$scope.showJobPage = function(job) {
+			var path = "/app/job/" + job.id;
+			$location.path( path );
+		}
+
 		$scope.$on('stateChangeSuccess', function() {
 		    $scope.loadJobs();
 		});
@@ -217,15 +221,15 @@ angular.module('myApp.jobs', [
 ])
 
 .controller('JobController', [
-	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 'appConfig',
-	function ($scope, JobsService, $stateParams, $ionicLoading, appConfig) {
+	'$scope', 'JobsService', '$stateParams', '$ionicLoading', '$location', 'appConfig',
+	function ($scope, JobsService, $stateParams, $ionicLoading, $location, appConfig) {
 
 		$scope.loadJob = function() {
 
 			var jobId = $stateParams.jobId;
 
 			$ionicLoading.show({
-				template: jobsConfig.loadingTemplate,
+				template: appConfig.loadingTemplate,
 			});	
     		JobsService.getJob(jobId, function(results){
 				$ionicLoading.hide();

@@ -8,9 +8,9 @@
 
     <div class="list">
       
-      <item class="item item-thumbnail-left" href="#/app/startup/{{startup.id}}" style="top: 10px; left: 10px; right: 10px;" collection-repeat="startup in startups" collection-item-width="'100%'" collection-item-height="150" ng-click="showStartupPage(startup)">
+      <item class="item item-thumbnail-left startup-list-item" collection-repeat="startup in startups" collection-item-width="'100%'" collection-item-height="140" ng-click="showStartupPage(startup)">
       
-      <img ng-show="startup.thumb_url" src="{{startup.thumb_url}}" />
+      <img ng-show="startup.thumb_url" class="startup-list-logo" src="{{startup.thumb_url}}" />
 
       <div>
         <!-- company name -->

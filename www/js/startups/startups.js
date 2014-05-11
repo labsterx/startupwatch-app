@@ -126,7 +126,10 @@ angular.module('myApp.startups', [
 			});
 		};
 
-		$scope.changeUrl = StartupsService.changeUrl;
+		$scope.showStartupPage = function(startup) {
+			var path = "/app/startup/" + startup.id;
+			$location.path( path );
+		}
 
 		$scope.$on('stateChangeSuccess', function() {
 		    $scope.loadStartups();
