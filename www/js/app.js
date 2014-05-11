@@ -1,5 +1,6 @@
 angular.module('myApp', [
     'ionic',
+    'myApp.config',
     'myApp.jobs',
     'myApp.startups',
     'myApp.search'
@@ -24,7 +25,7 @@ angular.module('myApp', [
     .state('app', {
       url: "/app",
       abstract: true,
-      templateUrl: "templates/menu.html",
+      templateUrl: "js/components/menu.html",
       controller: 'AppCtrl'
     })
 

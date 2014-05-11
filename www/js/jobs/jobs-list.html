@@ -27,13 +27,15 @@
 
         <div class="row" ng-show="job.job_location.name || job.job_role.name">
           <!-- Location -->
-          <div class="col" ng-show="job.job_location.name"><i class="icon ion-location"></i> 
+          <div class="col" ng-show="job.job_location.name">
+            <i class="icon ion-location"></i> 
             <span class="info-tag">
               <a href="#/app/jobs/tag/{{job.job_location.tag}}">{{job.job_location.name}}</a>
             </span>
           </div>
           <!-- Job Role -->
-          <div class="col" ng-show="job.job_role.name"><i class="icon ion-person"></i> 
+          <div class="col" ng-show="job.job_role.name">
+            <i class="icon ion-person"></i> 
             {{job.job_role.name}}
           </div>
         </div>
@@ -50,10 +52,10 @@
 
     </div><!-- /item -->
 
-  <ion-infinite-scroll ng-if="!!meta.page && meta.page < meta.last_page" icon="" on-infinite="loadJobs()" distance="1%">
-  </ion-infinite-scroll>
-
   </div><!-- /list -->
+
+  <ion-infinite-scroll ng-if="!meta.page || meta.page < meta.last_page" icon="" on-infinite="loadJobs()" distance="1%">
+  </ion-infinite-scroll>
 
   </ion-content>
 

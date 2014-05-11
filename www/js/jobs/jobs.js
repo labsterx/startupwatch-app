@@ -1,5 +1,6 @@
 angular.module('myApp.jobs', [
-	'ionic'
+	'ionic',
+	'myApp.config',
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -131,8 +132,8 @@ angular.module('myApp.jobs', [
 })
 
 .controller('JobsController', [
-	'$scope', 'JobsService', '$ionicLoading',
-	function ($scope, JobsService, $ionicLoading) {
+	'$scope', 'JobsService', '$ionicLoading', 'appConfig', 
+	function ($scope, JobsService, $ionicLoading, appConfig) {
 
 		$scope.jobs = [];
 		$scope.meta = {};
@@ -150,9 +151,9 @@ angular.module('myApp.jobs', [
 			else {
 				page = 1;
 			}
-			// console.log('Load Jobs. page=' + page);
+			console.log('loadJobs. page=' + page);
 			$ionicLoading.show({
-				template: 'Loading...'
+				template: appConfig.loadingTemplate,
 			});
     		JobsService.listJobs(page, function(results){
 				$ionicLoading.hide();
@@ -162,14 +163,18 @@ angular.module('myApp.jobs', [
 			});
 		};
 
-		$scope.loadJobs();
+		$scope.$on('stateChangeSuccess', function() {
+		    $scope.loadJobs();
+		});
+
+		// $scope.loadJobs();
 	}
 
 ])
 
 .controller('JobsTagController', [
-	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 
-	function ($scope, JobsService, $stateParams, $ionicLoading) {
+	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 'appConfig',
+	function ($scope, JobsService, $stateParams, $ionicLoading, appConfig) {
 
 		$scope.jobs = [];
 		$scope.meta = {};
@@ -189,9 +194,9 @@ angular.module('myApp.jobs', [
 			else {
 				page = 1;
 			}
-
+			console.log('LoadJobs by Tag. page=' + page);
 			$ionicLoading.show({
-				template: 'Loading...'
+				template: appConfig.loadingTemplate,
 			});	
     		JobsService.listJobsByTag(page, tagId, function(results){
 				$ionicLoading.hide();
@@ -201,22 +206,26 @@ angular.module('myApp.jobs', [
 			});
 		};
 
-		$scope.loadJobs();
+		$scope.$on('stateChangeSuccess', function() {
+		    $scope.loadJobs();
+		});
+
+		// $scope.loadJobs();
 
 	}
 
 ])
 
 .controller('JobController', [
-	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 
-	function ($scope, JobsService, $stateParams, $ionicLoading) {
+	'$scope', 'JobsService', '$stateParams', '$ionicLoading', 'appConfig',
+	function ($scope, JobsService, $stateParams, $ionicLoading, appConfig) {
 
 		$scope.loadJob = function() {
 
 			var jobId = $stateParams.jobId;
 
 			$ionicLoading.show({
-				template: 'Loading...'
+				template: jobsConfig.loadingTemplate,
 			});	
     		JobsService.getJob(jobId, function(results){
 				$ionicLoading.hide();

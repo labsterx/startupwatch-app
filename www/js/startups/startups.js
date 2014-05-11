@@ -1,5 +1,6 @@
 angular.module('myApp.startups', [
-	'ionic'
+	'ionic',
+	'myApp.config',
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -66,7 +67,7 @@ angular.module('myApp.startups', [
 		listStartups: function (page, callback) {
 			var tag_earth = '1643';
 			var url = 'https://api.angel.co/1/tags/' + tag_earth + '/startups' + '?page=' + page + '&order=desc&callback=JSON_CALLBACK';
-			console.log('Calling ' + url);
+			// console.log('Calling ' + url);
 			$http.jsonp(url).success(function(data) {
 				var results = processListResult(data);
 				callback(results);
@@ -93,8 +94,8 @@ angular.module('myApp.startups', [
 })
 
 .controller('StartupsController', [
-	'$scope', 'StartupsService', '$ionicLoading', '$location',
-	function ($scope, StartupsService, $ionicLoading, $location) {
+	'$scope', 'StartupsService', '$ionicLoading', '$location', 'appConfig', 
+	function ($scope, StartupsService, $ionicLoading, $location, appConfig) {
 
 		$scope.startups = [];
 		$scope.meta = {};
@@ -111,12 +112,13 @@ angular.module('myApp.startups', [
 			}
 			else {
 				page = 1;
-			}			
+			}
+			console.log('loadStartups. Page=' + page);			
 			$ionicLoading.show({
-				template: 'Loading...'
+				template: appConfig.loadingTemplate,
 			});	
     		StartupsService.listStartups(page, function(results){
-    			console.log(results);
+    			// console.log(results);
 				$ionicLoading.hide();
 				$scope.startups = $scope.startups.concat(results.startups);
 				$scope.meta = results.meta;
@@ -126,15 +128,19 @@ angular.module('myApp.startups', [
 
 		$scope.changeUrl = StartupsService.changeUrl;
 
-		$scope.loadStartups();
+		$scope.$on('stateChangeSuccess', function() {
+		    $scope.loadStartups();
+		});
+
+		// $scope.loadStartups();
 
 	}
 
 ])
 
 .controller('StartupsTagController', [
-	'$scope', 'StartupsService', '$stateParams', '$ionicLoading', '$location',
-	function ($scope, StartupsService, $stateParams, $ionicLoading, $location) {
+	'$scope', 'StartupsService', '$stateParams', '$ionicLoading', '$location', 'appConfig',
+	function ($scope, StartupsService, $stateParams, $ionicLoading, $location, appConfig) {
 
 		$scope.startups = [];
 		$scope.meta = {};
@@ -154,8 +160,9 @@ angular.module('myApp.startups', [
 			else {
 				page = 1;
 			}
+			console.log('loadStartups. Page=' + page);
 			$ionicLoading.show({
-				template: 'Loading...'
+				template: appConfig.loadingTemplate,
 			});	
     		StartupsService.listStartupsByTag(page, tagId, function(results){
 				$ionicLoading.hide();
@@ -170,22 +177,26 @@ angular.module('myApp.startups', [
 			$location.path( path );
 		}
 
-		$scope.loadStartups();
+		$scope.$on('stateChangeSuccess', function() {
+		    $scope.loadStartups();
+		});
+
+		// $scope.loadStartups();
 
 	}
 
 ])
 
 .controller('StartupController', [
-	'$scope', 'StartupsService', '$stateParams', '$ionicLoading', 
-	function ($scope, StartupsService, $stateParams, $ionicLoading) {
+	'$scope', 'StartupsService', '$stateParams', '$ionicLoading', 'appConfig', 
+	function ($scope, StartupsService, $stateParams, $ionicLoading, appConfig) {
 
 		$scope.loadStartup = function() {
 
 			var startupId = $stateParams.startupId;
 
 			$ionicLoading.show({
-				template: 'Loading...'
+				template: appConfig.loadingTemplate,
 			});	
     		StartupsService.getStartup(startupId, function(results){
 				$ionicLoading.hide();

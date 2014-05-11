@@ -50,7 +50,7 @@
     </item><!-- /item -->
 
 
-    <ion-infinite-scroll ng-if="!!meta.page && meta.page < meta.last_page" icon="" on-infinite="loadStartups()" distance="1%">
+    <ion-infinite-scroll ng-if="!meta.page || meta.page < meta.last_page" icon="" on-infinite="loadStartups()" distance="1%">
     </ion-infinite-scroll>
     
   </ion-content>

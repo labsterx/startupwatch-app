@@ -1,5 +1,6 @@
 angular.module('myApp.search', [
-	'ionic'
+	'ionic',
+    'myApp.config',
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -43,8 +44,8 @@ angular.module('myApp.search', [
 })
 
 .controller('SearchController', [
-	'$scope', 'SearchService', '$ionicLoading', '$location',
-	function ($scope, SearchService, $ionicLoading, $location) {
+	'$scope', 'SearchService', '$ionicLoading', '$location', 'appConfig', 
+	function ($scope, SearchService, $ionicLoading, $location, appConfig) {
 
 		if (!$scope.search) {
 			$scope.search = {
@@ -64,7 +65,7 @@ angular.module('myApp.search', [
 			$scope.no_results = false;
 
 			$ionicLoading.show({
-				template: '<i class="icon ion-looping"></i> Loading...'
+				template: appConfig.loadingTemplate,
 			});	
     		SearchService.search($scope.search.query, '', function(results){
 				$ionicLoading.hide();

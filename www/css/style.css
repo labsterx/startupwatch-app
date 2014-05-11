@@ -13,6 +13,11 @@
 	background-color: #EDEDED;
 }
 
+.icon-large {
+	font-size: 32px;
+}
+
+
 .page-title {
 	margin-top: 10px !important;
 	margin: 8px auto;
