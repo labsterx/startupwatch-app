@@ -47,29 +47,37 @@ angular.module('myApp.search', [
 	'$scope', 'SearchService', '$ionicLoading', '$location', 'appConfig', 
 	function ($scope, SearchService, $ionicLoading, $location, appConfig) {
 
-		if (!$scope.search) {
-			$scope.search = {
+		function resetStartupSearch () {
+			$scope.startupSearch = {
 				query: '',
 				type: ''
 			};
+			$scope.startupResults = [];
+			$scope.no_startup_results = false;
 		}
 
-		if ($scope.results) {
-			$scope.results = [];
-		}
+		function resetJobSearch () {
+			$scope.jobSearch = {
+				query: '',
+				type: ''
+			};
+			$scope.jobResults = [];
+			$scope.no_job_results = false;
+		}		
 
-		$scope.no_results = false;
+		resetStartupSearch();
+		resetJobSearch();
 
-		$scope.doSearch = function(searchType) {
+		$scope.doStartupSearch = function(searchType) {
 
-			$scope.no_results = false;
+			$scope.no_startup_results = false;
 
 			$ionicLoading.show({
 				template: appConfig.loadingTemplate,
 			});	
-    		SearchService.search($scope.search.query, '', function(results){
+    		SearchService.search($scope.startupSearch.query, '', function(results){
 				$ionicLoading.hide();
-				var filteredResults = []
+				var filteredResults = [];
 				for (var i=0; i<results.length; i++) {
 					var item = results[i];
 					var type = item.type;
@@ -100,16 +108,73 @@ angular.module('myApp.search', [
 					$location.path(path);
 				}
 				else {
-					$scope.results = filteredResults;
+					$scope.startupResults = filteredResults;
 					if (filteredResults.length == 0) {
-						$scope.no_results = true;
+						$scope.no_startup_results = true;
 					}
 					else {
-						$scope.no_results = false;	
+						$scope.no_startup_results = false;	
 					}
 				}
 			});
 		};
+
+		$scope.doJobSearch = function(searchType) {
+
+			$scope.no_job_results = false;
+			
+			$ionicLoading.show({
+				template: appConfig.loadingTemplate,
+			});	
+    		SearchService.search($scope.jobSearch.query, '', function(results){
+				$ionicLoading.hide();
+				var filteredResults = [];
+				for (var i=0; i<results.length; i++) {
+					var item = results[i];
+					var type = item.type;
+					if (type == searchType) {
+						if (type == 'Startup') {
+							item.localLink = '#/jobs/startup/' + item.id;
+							item.path = "/jobs/startup/" + item.id;
+							item.icon = "ion-document-text";
+						}
+						else if (type == 'LocationTag') {
+							item.localLink = '#/app/jobs/tag/' + item.id;
+							item.path = '/app/jobs/tag/' + item.id;
+							item.icon = "ion-android-earth";
+						}
+						else {
+							item.localLink = '';
+						}
+						filteredResults.push(item);
+					}
+				}
+				if (filteredResults.length == 1) {
+					var path = filteredResults[0].path;
+					$location.path(path);
+				}
+				else {
+					$scope.jobResults = filteredResults;
+					if (filteredResults.length == 0) {
+						$scope.no_job_results = true;
+					}
+					else {
+						$scope.no_job_results = false;	
+					}
+				}
+			});
+		};
+
+		$scope.clearStartupSearch = function() {
+			console.log('clearStartupSearch');
+			resetStartupSearch();
+		};
+
+		$scope.clearJobSearch = function() {
+			resetJobSearch();
+		}		
+
+
 
 	}
 

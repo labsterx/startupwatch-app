@@ -8,14 +8,17 @@
 
   <div class="list">
 
-    <div class="card job-list-item" collection-repeat="job in jobs" collection-item-width="'100%'" collection-item-height="200" ng-click="showJobPage(job)">
+    <div class="card job-list-item" collection-repeat="job in jobs" collection-item-width="'100%'" collection-item-height="194" ng-click="showJobPage(job)">
       
       <div class="item item-divider item-icon-right list-item-title">
         {{job.title}}
         <i class="icon ion-ios7-arrow-right"></i>
       </div>
 
-      <div class="item list-item-content">
+      <div class="item list-item-content item-thumbnail-left">
+
+        <!-- company logo -->
+        <img ng-show="job.startup.thumb_url" class="startup-list-logo" ng-src="{{job.startup.thumb_url}}" />
 
         <!-- Startup Name -->
         <div ng-show="job.startup.name">
@@ -51,8 +54,8 @@
           </div>
         </div> 
 
-        <p ng-show="job.created_at" class="list-item-small italic pull-right">
-          <i>{{job.created_at | date: 'mediumDate'}}</i>
+        <p ng-show="job.updated_at" class="list-item-small italic pull-right">
+          <i>{{job.updated_at | date: 'mediumDate'}}</i>
         </p> 
 
       </div>

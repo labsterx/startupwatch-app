@@ -5,40 +5,79 @@
 
   <ion-content class="has-header">
   
-    <h2 class="page-title">Search</h2>
+    <h2 class="page-title">Startup Search</h2>
   
     <div class="list list-inset padding">
-		<label class="item item-input">
-			<i class="icon ion-search placeholder-icon"></i>
-			<input type="text" placeholder="Search" ng-model="search.query">
-		</label>
-
+    	<div>
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="startupSearch.query">
+			</label>
+			<i ng-show="startupSearch.query" class="icon ion-close-circled placeholder-icon input-clear-icon" ng-click="clearStartupSearch()"></i>
+		</div>
 		<div class="padding" style='margin: 8px auto; text-align:center'>
-			<button class="button button-dark" ng-disabled="!search.query" ng-click="doSearch('Startup')">
+			<button class="button button-dark" ng-disabled="!startupSearch.query" ng-click="doStartupSearch('Startup')">
 	  			Startup Search
 			</button>
-			<button class="button button-dark" ng-disabled="!search.query" ng-click="doSearch('LocationTag')">
+			<button class="button button-dark" ng-disabled="!startupSearch.query" ng-click="doStartupSearch('LocationTag')">
 	  			Location Search
 			</button>
-			<button class="button button-dark" ng-disabled="!search.query" ng-click="doSearch('MarketTag')">
+			<button class="button button-dark" ng-disabled="!startupSearch.query" ng-click="doStartupSearch('MarketTag')">
 	  			Market Search
 			</button>
 		</div>
 	</div>
 
-	<div class="card" ng-show="no_results">
+	<div class="card" ng-show="no_startup_results">
 	  <div class="item item-text-wrap">
 	    Sorry, no results. Please try again.
 	  </div>
 	</div>	
 
-	<div class="list card" ng-show="!!results.length">
-      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in results" >
+	<div class="list card" ng-show="!!startupResults.length">
+      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in startupResults" >
       	<i class="icon {{result.icon}}"></i>
         {{result.name}}
         <i class="icon ion-ios7-arrow-right"></i>
       </a>
-	<div>
+	</div>
+
+    <h2 class="page-title">Job Search</h2>
+
+    <div class="list list-inset padding">
+    	<div>
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search" ng-model="jobSearch.query">
+			</label>
+			<i ng-show="jobSearch.query" class="icon ion-close-circled placeholder-icon input-clear-icon" ng-click="clearJobSearch()"></i>
+		</div>
+
+		<div class="padding" style='margin: 8px auto; text-align:center'>
+			<button class="button button-dark" ng-disabled="!jobSearch.query" ng-click="doJobSearch('LocationTag')">
+	  			Search by Location
+			</button>
+			<button class="button button-dark" ng-disabled="!jobSearch.query" ng-click="doJobSearch('Startup')">
+	  			Search by Company
+			</button>
+		</div>
+	</div>
+
+	<div class="card" ng-show="no_job_results">
+	  <div class="item item-text-wrap">
+	    Sorry, no results. Please try again.
+	  </div>
+	</div>	
+
+	<div class="list card" ng-show="!!jobResults.length">
+      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in jobResults" >
+      	<i class="icon {{result.icon}}"></i>
+        {{result.name}}
+        <i class="icon ion-ios7-arrow-right"></i>
+      </a>
+	</div>
+
+
 
 
 

@@ -17,6 +17,15 @@
 	background-color: #EDEDED;
 }
 
+i.input-clear-icon {
+	position: absolute; 
+	color: #B2B2B2;  
+	font-size: 22px; 
+	right: 20px; 
+	top: 22px; 
+	z-index: 10;
+}
+
 .icon-large {
 	font-size: 32px;
 }
@@ -29,9 +38,10 @@
 }
 
 .page-title {
-	margin-top: 10px !important;
 	margin: 8px auto;
+	margin-top: 20px !important;
 	text-align: center;
+	font-size: 20px;
 }
 
 .search-type, .info-tag {
@@ -80,7 +90,7 @@
 }
 
 .list-item-content i.icon {
-	font-size: 24px;
+	font-size: 20px;
 	margin-right: 5px;
 }
 
@@ -107,6 +117,7 @@ img.startup-list-logo {
 	left: 10px; 
 	right: 10px;
 	height: 180px;
+	margin: 5px;
 }	
 
 /* Details */

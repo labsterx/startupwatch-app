@@ -36,6 +36,16 @@ angular.module('myApp.jobs', [
       }
   	})
 
+    .state('app.jobs_by_startup', {
+      url: "/jobs/startup/:startupId",
+      views: {
+        'menuContent' :{
+          templateUrl: "js/jobs/jobs-list.html",
+          controller: 'JobsStartupController'
+        }
+      }
+  	})  	
+
 })
 
 .factory('JobsService', function ($http) {
@@ -113,6 +123,15 @@ angular.module('myApp.jobs', [
 				callback(list);
 			});
 		},	
+
+		listJobsByStartup: function (page, startupId, callback) {
+			var url = 'https://api.angel.co/1/startups/' + startupId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
+			console.log('listJobsByStartup. url=' + url);
+			$http.jsonp(url).success(function(results) {
+				var list = processListResult(results);
+				callback(list);
+			});
+		},
 
 		getJob: function (jobId, callback) {
 			var url = 'https://api.angel.co/1/jobs/' + jobId + '?callback=JSON_CALLBACK';
@@ -198,6 +217,58 @@ angular.module('myApp.jobs', [
 				template: appConfig.loadingTemplate,
 			});	
     		JobsService.listJobsByTag(page, tagId, function(results){
+				$ionicLoading.hide();
+				$scope.jobs = $scope.jobs.concat(results.jobs);
+				$scope.meta = results.meta;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+			});
+		};
+
+		$scope.showJobPage = function(job) {
+			var path = "/app/job/" + job.id;
+			$location.path( path );
+		}
+
+		$scope.$on('stateChangeSuccess', function() {
+		    $scope.loadJobs();
+		});
+
+		// $scope.loadJobs();
+
+	}
+
+])
+
+
+.controller('JobsStartupController', [
+	'$scope', 'JobsService', '$stateParams', '$ionicLoading', '$location', 'appConfig',
+	function ($scope, JobsService, $stateParams, $ionicLoading, $location, appConfig) {
+
+		$scope.jobs = [];
+		$scope.meta = {};
+
+		console.log('JobsStartupController');
+
+		$scope.loadJobs = function() {
+
+			var startupId = $stateParams.startupId;
+			var page;
+			if ($scope.meta.page && $scope.meta.last_page) {
+				if ($scope.meta.page < $scope.meta.last_page) {
+					page = $scope.meta.page + 1;
+				}
+				else {
+					return;
+				}
+			}
+			else {
+				page = 1;
+			}
+			console.log('LoadJobs by Startup. page=' + page);
+			$ionicLoading.show({
+				template: appConfig.loadingTemplate,
+			});	
+    		JobsService.listJobsByStartup(page, startupId, function(results){
 				$ionicLoading.hide();
 				$scope.jobs = $scope.jobs.concat(results.jobs);
 				$scope.meta = results.meta;
