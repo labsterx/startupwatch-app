@@ -1,5 +1,10 @@
 /* Empty. Add your own CSS if you like */
 
+/* overwrite */
+.card {
+	border-radius: 0 !important;
+}
+
 /* general */
 .italic {
 	font-style:italic;
@@ -14,7 +19,7 @@
 }
 
 .bg-gray {
-	background-color: #EDEDED;
+	background-color: #EEEEEE;
 }
 
 i.input-clear-icon {
@@ -86,16 +91,27 @@ i.input-clear-icon {
 
 .list-item-title {
 	font-weight: bold;
-	font-size: 1.0em;
+	font-size: 1.1em;
 }
 
-.list-item-title i.icon {
-	color: #CCC;
+.card .list-item-title {
+	border: 0;
+	background-color: #D3D3D3;
+	padding: 10px;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+}
+
+.card .list-item-title i.icon {
+	color: #FFF;
 	font-size: 1.5em;
 }
 
+
+
 .list-item-content {
 	font-size: 0.90em;
+	border: 0;
 }
 
 .list-item-content i.icon {
@@ -131,8 +147,12 @@ img.startup-list-logo {
 
 /* Details */
 
+.details-section {
+	margin-bottom: 40px !important;
+}
+
 .details-header {
-	background-color: #EDEDED;
+	background-color: #D1EACA;
 }
 
 .details-body div {
