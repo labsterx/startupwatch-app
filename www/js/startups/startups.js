@@ -1,5 +1,4 @@
 angular.module('myApp.startups', [
-	'ionic',
 	'myApp.config',
 ])
 
@@ -42,17 +41,40 @@ angular.module('myApp.startups', [
 
 	'use strict';
 
-	function processListResult (data) {
+	function processListResult (data, tagId) {
 		var results = {};
+		// console.log(data);
 		var meta = {
 			total: data.total,
 			per_page: data.per_page,
 			page: data.page,
 			last_page: data.last_page,
+			page_title: 'New Startups',
 		};
 		var list = [];
+		var tag_found = false;
 		for (var i=0; i<data.startups.length; i++) {
 			var item = data.startups[i];
+			if (tagId && !tag_found) {
+				angular.forEach(item.locations, function(location) {
+					if (location.id == tagId) {
+						tag_found = true;
+						meta.page_title = "Startups in " + location.display_name;
+					}
+				});
+				angular.forEach(item.markets, function(market) {
+					if (market.id == tagId) {
+						tag_found = true;
+						meta.page_title = "Startups: " + market.display_name;
+					}
+				});	
+				// angular.forEach(item.markets, function(market) {
+				// 	if (market.id == tagId) {
+				// 		tag_found = true;
+				// 		meta.page_title = "Startups in the " + market.display_name + " Market";
+				// 	}
+				// });
+			}
 			if (!item.hidden) {
 				list.push(item);
 			}
@@ -76,8 +98,9 @@ angular.module('myApp.startups', [
 
 		listStartupsByTag: function (page, tagId, callback) {
 			var url = 'https://api.angel.co/1/tags/' + tagId + '/startups'  + '?page=' + page + '&callback=JSON_CALLBACK';
+			// console.log(url);
 			$http.jsonp(url).success(function(data) {
-				var results = processListResult(data);
+				var results = processListResult(data, tagId);
 				callback(results);
 			});
 		},
@@ -135,8 +158,6 @@ angular.module('myApp.startups', [
 		    $scope.loadStartups();
 		});
 
-		// $scope.loadStartups();
-
 	}
 
 ])
@@ -183,8 +204,6 @@ angular.module('myApp.startups', [
 		$scope.$on('stateChangeSuccess', function() {
 		    $scope.loadStartups();
 		});
-
-		// $scope.loadStartups();
 
 	}
 

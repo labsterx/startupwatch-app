@@ -1,5 +1,4 @@
 angular.module('myApp.jobs', [
-	'ionic',
 	'myApp.config',
 ])
 
@@ -52,15 +51,17 @@ angular.module('myApp.jobs', [
 
 	'use strict';
 
-	function processListResult (data) {
+	function processListResult (data, tagId) {
 		var results = {};
 		var meta = {
 			total: data.total,
 			per_page: data.per_page,
 			page: data.page,
 			last_page: data.last_page,
+			page_title: 'New Jobs'
 		};
 		var list = [];
+		var tag_found = false;
 		for (var i=0; i<data.jobs.length; i++) {
 			var item = data.jobs[i];
 			item.job_skills = [];
@@ -70,18 +71,31 @@ angular.module('myApp.jobs', [
 				var tag = item.tags[j];
 				if (tag.tag_type == 'LocationTag') {
 					item.job_locations.push(tag);
+					if (tagId && !tag_found && (tag.id == tagId)) {
+						tag_found = true;
+						meta.page_title = "Jobs in " + tag.display_name;
+					}
 				}
 				else if (tag.tag_type == 'RoleTag') {
 					item.job_roles.push (tag);
+					if (tagId && !tag_found && (tag.id == tagId)) {
+						tag_found = true;
+						meta.page_title = "Jobs as " + tag.display_name;
+					}					
 				}
 				else if (tag.tag_type == 'SkillTag') {
 					item.job_skills.push(tag);
+					if (tagId && !tag_found && (tag.id == tagId)) {
+						tag_found = true;
+						meta.page_title = "Jobs for " + tag.display_name;
+					}					
 				}				
 			}
 			list.push(item);
 		}
 		results.meta = meta;
 		results.jobs = list;
+		// console.log(results);
 		return results;
 	}
 
@@ -118,8 +132,9 @@ angular.module('myApp.jobs', [
 
 		listJobsByTag: function (page, tagId, callback) {
 			var url = 'https://api.angel.co/1/tags/' + tagId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
+			// console.log(url);
 			$http.jsonp(url).success(function(results) {
-				var list = processListResult(results);
+				var list = processListResult(results, tagId);
 				callback(list);
 			});
 		},	
@@ -185,7 +200,6 @@ angular.module('myApp.jobs', [
 		    $scope.loadJobs();
 		});
 
-		// $scope.loadJobs();
 	}
 
 ])
@@ -232,8 +246,6 @@ angular.module('myApp.jobs', [
 		$scope.$on('stateChangeSuccess', function() {
 		    $scope.loadJobs();
 		});
-
-		// $scope.loadJobs();
 
 	}
 
@@ -284,8 +296,6 @@ angular.module('myApp.jobs', [
 		$scope.$on('stateChangeSuccess', function() {
 		    $scope.loadJobs();
 		});
-
-		// $scope.loadJobs();
 
 	}
 

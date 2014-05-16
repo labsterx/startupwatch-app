@@ -35,11 +35,11 @@
 	</div>	
 
 	<div class="list card" ng-show="!!startupResults.length">
-      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in startupResults" >
+      <div class="item item-icon-left item-icon-right" ng-repeat="result in startupResults" ng-click="showSearchResult(result)">
       	<i class="icon {{result.icon}}"></i>
         {{result.name}}
         <i class="icon ion-ios7-arrow-right"></i>
-      </a>
+      </div>
 	</div>
 
     <h2 class="page-title">Job Search</h2>

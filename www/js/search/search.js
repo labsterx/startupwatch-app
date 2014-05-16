@@ -1,5 +1,4 @@
 angular.module('myApp.search', [
-	'ionic',
     'myApp.config',
 ])
 
@@ -63,10 +62,17 @@ angular.module('myApp.search', [
 			};
 			$scope.jobResults = [];
 			$scope.no_job_results = false;
-		}		
+		}
+
+		function showSearchResult (item) {
+			var path = item.path;
+			$location.path(path);
+		}
 
 		resetStartupSearch();
 		resetJobSearch();
+
+		$scope.showSearchResult = showSearchResult;
 
 		$scope.doStartupSearch = function(searchType) {
 
@@ -104,8 +110,8 @@ angular.module('myApp.search', [
 					}
 				}
 				if (filteredResults.length == 1) {
-					var path = filteredResults[0].path;
-					$location.path(path);
+					var item = filteredResults[0];
+					showSearchResult(item);
 				}
 				else {
 					$scope.startupResults = filteredResults;
@@ -150,8 +156,8 @@ angular.module('myApp.search', [
 					}
 				}
 				if (filteredResults.length == 1) {
-					var path = filteredResults[0].path;
-					$location.path(path);
+					var item = filteredResults[0];
+					$scope.showSearchResult(item);
 				}
 				else {
 					$scope.jobResults = filteredResults;

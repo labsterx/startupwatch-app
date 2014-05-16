@@ -1,4 +1,4 @@
-<ion-view title="Startup Lists">
+<ion-view title="Startups">
 
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
@@ -6,11 +6,13 @@
 
   <ion-content class="has-header bg-gray">
 
+    <div ng-show="meta.page_title" class="page-title">{{meta.page_title}}</div>
+
     <div class="list">
       
       <item class="item item-thumbnail-left startup-list-item" collection-repeat="startup in startups" collection-item-width="'100%'" collection-item-height="140" ng-click="showStartupPage(startup)">
       
-      <img ng-show="startup.thumb_url" class="startup-list-logo" src="{{startup.thumb_url}}" />
+      <img ng-show="startup.thumb_url" class="startup-list-logo" ng-src="{{startup.thumb_url}}" />
 
       <div>
         <!-- company name -->

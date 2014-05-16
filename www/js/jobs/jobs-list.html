@@ -6,6 +6,8 @@
 
   <ion-content class="has-header bg-gray">
 
+  <div ng-show="meta.page_title" class="page-title">{{meta.page_title}}</div>
+
   <div class="list">
 
     <div class="card job-list-item" collection-repeat="job in jobs" collection-item-width="'100%'" collection-item-height="194" ng-click="showJobPage(job)">
@@ -32,7 +34,7 @@
           <!-- Location -->
           <div class="col" ng-show="job.job_locations.length">
             <i class="icon ion-location"></i> 
-            <span ng-repeat="location in job.job_locations" class="info-tag">
+            <span ng-repeat="location in job.job_locations" class="info-tag" ng-click="listJobsByLocation(location)">
               <a href="#/app/jobs/tag/{{location.id}}">{{location.display_name}}</a>
             </span>
           </div>
