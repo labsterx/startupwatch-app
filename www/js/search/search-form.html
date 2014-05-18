@@ -3,12 +3,26 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
 
-  <ion-content class="has-header">
+  <ion-content class="has-header image_background_section">
   
-    <h2 class="page-title">Startup Search</h2>
+  	<!-- Search Type Switch -->
+    <div class="row search_type_switch">
+    	<div class="col" ng-click="changeSearchType('startup')">
+    		<div class="search_type_select" ng-class="{'search_type_select_active': search_type == 'startup'}">
+    			Startups
+    		</div>
+    	</div>
+    	<div class="col" ng-click="changeSearchType('job')">
+    		<div class="search_type_select" ng-class="{'search_type_select_active': search_type == 'job'}">
+    			Jobs
+    		</div>
+    	</div>
+    </div>    
   
-    <div class="list list-inset padding">
-    	<div>
+  	<!-- Startup Search -->
+  	<div ng-show="search_type == 'startup'">
+
+    	<div class="search_input_box">
 			<label class="item item-input">
 				<i class="icon ion-search placeholder-icon"></i>
 				<input type="text" placeholder="Search" ng-model="startupSearch.query">
@@ -17,7 +31,7 @@
 		</div>
 		<div class="search-button-group">
 			<button class="button button-dark" ng-disabled="!startupSearch.query" ng-click="doStartupSearch('Startup')">
-	  			Startup Search
+	  			Name Search
 			</button>
 			<button class="button button-dark" ng-disabled="!startupSearch.query" ng-click="doStartupSearch('LocationTag')">
 	  			Location Search
@@ -26,31 +40,33 @@
 	  			Market Search
 			</button>
 		</div>
+
+
+		<div class="card" ng-show="no_startup_results">
+		  <div class="item item-text-wrap">
+		    Sorry, no results. Please try again.
+		  </div>
+		</div>	
+
+		<div class="list card search_result_list" ng-show="!!startupResults.length">
+	      <div class="item item-icon-left item-icon-right" ng-repeat="result in startupResults" ng-click="showSearchResult(result)">
+	      	<i class="icon {{result.icon}}"></i>
+	        {{result.name}}
+	        <i class="icon ion-ios7-arrow-right"></i>
+	      </div>
+		</div>
+
 	</div>
 
-	<div class="card" ng-show="no_startup_results">
-	  <div class="item item-text-wrap">
-	    Sorry, no results. Please try again.
-	  </div>
-	</div>	
+	<!-- Job Search -->
+	<div ng-show="search_type == 'job'">
 
-	<div class="list card" ng-show="!!startupResults.length">
-      <div class="item item-icon-left item-icon-right" ng-repeat="result in startupResults" ng-click="showSearchResult(result)">
-      	<i class="icon {{result.icon}}"></i>
-        {{result.name}}
-        <i class="icon ion-ios7-arrow-right"></i>
-      </div>
-	</div>
-
-    <h2 class="page-title">Job Search</h2>
-
-    <div class="list list-inset padding">
-    	<div>
+    	<div class="search_input_box">
 			<label class="item item-input">
 				<i class="icon ion-search placeholder-icon"></i>
 				<input type="text" placeholder="Search" ng-model="jobSearch.query">
 			</label>
-			<i ng-show="jobSearch.query" class="icon ion-close-circled placeholder-icon input-clear-icon" ng-click="clearJobSearch()"></i>
+			<i ng-show="jobSearch.query" class="icon ion-close-circled placeholder-icon input-clear-icon" ng-click="clearJobSearch()"></i>	
 		</div>
 
 		<div class="search-button-group">
@@ -61,20 +77,22 @@
 	  			Search by Company
 			</button> -->
 		</div>
-	</div>
 
-	<div class="card" ng-show="no_job_results">
-	  <div class="item item-text-wrap">
-	    Sorry, no results. Please try again.
-	  </div>
-	</div>	
 
-	<div class="list card" ng-show="!!jobResults.length">
-      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in jobResults" >
-      	<i class="icon {{result.icon}}"></i>
-        {{result.name}}
-        <i class="icon ion-ios7-arrow-right"></i>
-      </a>
+		<div class="card" ng-show="no_job_results">
+		  <div class="item item-text-wrap">
+		    Sorry, no results. Please try again.
+		  </div>
+		</div>	
+
+		<div class="list card search_result_list" ng-show="!!jobResults.length">
+	      <a href="{{result.localLink}}" class="item item-icon-left item-icon-right" ng-repeat="result in jobResults" >
+	      	<i class="icon {{result.icon}}"></i>
+	        {{result.name}}
+	        <i class="icon ion-ios7-arrow-right"></i>
+	      </a>
+		</div>
+
 	</div>
 
 

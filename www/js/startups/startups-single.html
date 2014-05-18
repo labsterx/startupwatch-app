@@ -4,13 +4,12 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
 
-  <div class="list card details-section">
+  <div class="list details-section">
 
-  	<div class="item details-header">
-  		<span class="details-title">{{startup.name}}</span>
-  	</div>
 
   	<div class="item item-body details-body">
+
+  		<div class="details-title">{{startup.name}}</div>
 
  		<div ng-show="startup.logo_url">
 	    	<img class="details-logo" ng-src="{{startup.logo_url}}" />
@@ -18,9 +17,9 @@
 
 	    <div ng-show="!!startup.locations.length">
 	    	<strong>Location:</strong> 
-	    	<span class="info-tag" ng-repeat="location in startup.locations" >
-	    		<a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
-	    	</span>
+	    	<a class="no_underline" href="#/app/startups/tag/{{location.id}}" ng-repeat="location in startup.locations">
+	    		<span class="info-tag tag-location">{{location.display_name}}</span>
+	    	</a>
 	    </div>	
 
 	    <div ng-show="!!startup.company_type.length">
@@ -32,9 +31,9 @@
 
 	    <div ng-show="!!startup.markets.length">
 	    	<strong>Markets:</strong>
-	    	<span class="info-tag" ng-repeat="market in startup.markets">
-	    		<a href="#/app/startups/tag/{{market.id}}">{{market.display_name}}</a>
-	    	</span>
+	    	<a class="no_underline" href="#/app/startups/tag/{{market.id}}" ng-repeat="market in startup.markets">
+	    		<span class="info-tag tag-market">{{market.display_name}}</span>
+	    	</a>
 	    </div>	
 
 	    <div ng-show="!!startup.company_size">

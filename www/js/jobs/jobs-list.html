@@ -25,30 +25,27 @@
         <!-- Startup Name -->
         <div ng-show="job.startup.name">
           <strong>Company: </strong> 
-          <span class="info-tag">
-            <a href="#/app/startup/{{job.startup.id}}">{{job.startup.name}}</a>
-          </span>
+          <a class="no_underline" href="#/app/startup/{{job.startup.id}}"><span class="info-tag tag-company">{{job.startup.name}}</span></a>
         </div>
 
-        <div class="row" ng-show="job.job_locations.length || job.job_roles.length">
-          <!-- Location -->
-          <div class="col" ng-show="job.job_locations.length">
-            <i class="icon ion-location"></i> 
-            <span ng-repeat="location in job.job_locations" class="info-tag" ng-click="listJobsByLocation(location)">
-              <a href="#/app/jobs/tag/{{location.id}}">{{location.display_name}}</a>
-            </span>
-          </div>
-          <!-- Job Role -->
-          <div class="col" ng-show="job.job_roles.length">
-            <i class="icon ion-person"></i> 
+        <!-- Location -->
+        <div ng-show="job.job_locations.length">
+            <strong>Location: </strong>
+            <a class="no_underline" ng-repeat="location in job.job_locations" href="#/app/jobs/tag/{{location.id}}">
+              <span class="info-tag tag-location">{{location.display_name}}</span>
+            </a>
+        </div>
+
+        <!-- Job Role -->
+        <div ng-show="job.job_roles.length">
+            <strong>Role: </strong>
             <span ng-repeat="role in job.job_roles">
               {{role.display_name}}
             </span>
-          </div>
         </div>
 
         <!-- Salary and equity -->
-        <div ng-show="(job.salary_min || job.salary_max) || (job.equity_min || job.equity_min)">
+        <div ng-show="(job.salary_min || job.salary_max) || (job.equity_min || job.equity_min)" class="list-item-small">
           <span ng-show="job.salary_min || job.salary_max">
             {{job.currency_code}} {{job.salary_min}} - {{job.salary_max}}<span ng-show="job.equity_min || job.equity_max">, </span>
           </span>
@@ -57,9 +54,9 @@
           </span>
         </div> 
 
-        <p ng-show="job.updated_at" class="list-item-small italic pull-right">
+        <div ng-show="job.updated_at" class="list-item-small italic pull-right">
           <i>{{job.updated_at | date: 'mediumDate'}}</i>
-        </p> 
+        </div> 
 
       </div>
 

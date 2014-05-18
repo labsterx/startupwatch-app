@@ -14,13 +14,11 @@
       
       <img ng-show="startup.thumb_url" class="startup-list-logo" ng-src="{{startup.thumb_url}}" />
 
-      <div>
-        <!-- company name -->
-        <span class="list-item-title">{{startup.name}}</span>
+      <!-- company name -->
+      <div class="list-item-title">
+        {{startup.name}}
       </div>
-
-
-        
+  
        <div class="list-item-content">
           <!-- High Concept -->
           <p ng-show="startup.high_concept">
@@ -29,9 +27,11 @@
 
         <p ng-show="startup.locations.length">
           <strong>Location:</strong> 
-          <span class="info-tag" ng-show="startup.locations.length" ng-repeat="location in startup.locations">
-            <a href="#/app/startups/tag/{{location.id}}">{{location.display_name}}</a>
-          </span>
+          <a class="no_underline" ng-repeat="location in startup.locations" href="#/app/startups/tag/{{location.id}}">
+            <span class="info-tag tag-location">
+              {{location.display_name}}
+            </span>
+          </a>
           </span>
         </p>
 

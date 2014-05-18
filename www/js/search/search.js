@@ -46,6 +46,8 @@ angular.module('myApp.search', [
 	'$scope', 'SearchService', '$ionicLoading', '$location', 'appConfig', 
 	function ($scope, SearchService, $ionicLoading, $location, appConfig) {
 
+		$scope.search_type = "startup";
+
 		function resetStartupSearch () {
 			$scope.startupSearch = {
 				query: '',
@@ -73,6 +75,10 @@ angular.module('myApp.search', [
 		resetJobSearch();
 
 		$scope.showSearchResult = showSearchResult;
+
+		$scope.changeSearchType = function(type) {
+			$scope.search_type = type;
+		}
 
 		$scope.doStartupSearch = function(searchType) {
 
@@ -172,11 +178,11 @@ angular.module('myApp.search', [
 		};
 
 		$scope.clearStartupSearch = function() {
-			console.log('clearStartupSearch');
 			resetStartupSearch();
 		};
 
 		$scope.clearJobSearch = function() {
+			console.log('clearJobSearch');			
 			resetJobSearch();
 		}		
 

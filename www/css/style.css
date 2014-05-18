@@ -22,13 +22,17 @@
 	background-color: #EEEEEE;
 }
 
+a.no_underline {
+	text-decoration: none;
+}
+
 i.input-clear-icon {
-	position: absolute; 
-	color: #B2B2B2;  
-	font-size: 22px; 
-	right: 20px; 
-	top: 22px; 
+	position: absolute;
+	font-size: 22px;
+	right: 38px;
+	top: 23px;
 	z-index: 10;
+	float: right;
 }
 
 i.header-nav-icon {
@@ -55,6 +59,47 @@ i.header-nav-icon {
 	font-size: 32px;
 }
 
+.image_background_section {
+	min-height: 100%;
+    background-size: cover;
+    background-image: url(../img/bg_blue.jpg);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+/* Search */
+
+.search_type_select {
+	background-color: #ecf0f1; 
+	padding: 15px 10px; 
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	color: #444;
+	margin: 5px -5px;	
+}
+
+.search_type_select_active {
+	background-color: #27ae60 !important;
+	color: #FFF !important;
+}
+
+.search_type_switch {
+	padding: 30px;
+	padding-top: 60px;
+	padding-bottom: 0px;
+}
+
+.search_input_box {
+	position: relative;
+	padding: 10px 30px;
+}
+
+.search_result_list {
+	margin-bottom: 20px;
+}
+
+
 .page-title {
 	margin: 8px auto;
 	margin-top: 20px !important;
@@ -62,20 +107,43 @@ i.header-nav-icon {
 	font-size: 20px;
 }
 
-.search-type, .info-tag {
-	font-size: 0.90em;
+.search-type {
+	/*font-size: 0.90em;*/
 	background-color: #D3EFFF;
-	padding: 2px 5px;
+	padding: 3px 5px;
 	margin-left: 2px;
 	margin-right: 2px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;	
+	line-height: 1.85em;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;	
 }
 
-.info-tag a {
-	text-decoration: none;
+.info-tag {
+	background-color: #EDEDED;
+	padding: 3px 5px;
+	margin-left: 2px;
+	margin-right: 2px;
+	line-height: 1.85em;	
 	color: #444;
+	max-width: 150px;
+	white-space: nowrap;
+  	overflow: hidden;
+	text-overflow: ellipsis;	
+}
+
+.tag-company {
+	background-color: #27AE60;
+	font-weight: bold;
+	color: #FFF;
+}
+
+.tag-location {
+	background-color: #D3EFFF;
+}
+
+.tag-market {
+	background-color: #FCEAA3;
 }
 
 .company-profile {
@@ -96,11 +164,15 @@ i.header-nav-icon {
 .list-item-title {
 	font-weight: bold;
 	font-size: 1.1em;
+	white-space: nowrap;
+  	overflow: hidden;
+	text-overflow: ellipsis;
+	margin-bottom: bottom;
 }
 
 .card .list-item-title {
 	border: 0;
-	background-color: #D3D3D3;
+	background-color: #F9F9F9;
 	padding: 10px;
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
@@ -114,17 +186,27 @@ i.header-nav-icon {
 
 
 .list-item-content {
-	font-size: 0.90em;
+	font-size: 0.95em;
 	border: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;	
+}
+
+.list-item_content div, .list-item_content a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;		
 }
 
 .list-item-content i.icon {
 	font-size: 20px;
 	margin-right: 5px;
+	margin-left: -10px;
 }
 
 .list-item-small {
-	font-size: 0.80em !important;
+	font-size: 0.90em !important;
 }
 
 
@@ -162,12 +244,13 @@ img.startup-list-logo {
 .details-body div {
 	margin-top: 5px;
 	margin-bottom: 5px;
-	font-size: 0.90em;
+	/*font-size: 0.90em;*/
 }
 
 .details-title {
 	font-weight: bold;
-	font-size: 1.2em;	
+	line-height: 1.25em;
+	font-size: 1.4em !important;	
 }
 
 .details-tagline {
@@ -203,4 +286,35 @@ img.job-company-logo {
 	margin-bottom: 10px;
 	padding: 8px;
 	border: 1px solid #DBDBDB;
+}
+
+
+/* Arrow Box */
+.arrow_box {
+	position: relative;
+	background: #88b7d5;
+	border: 4px solid #c2e1f5;
+}
+.arrow_box:after, .arrow_box:before {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow_box:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-top-color: #88b7d5;
+	border-width: 30px;
+	margin-left: -30px;
+}
+.arrow_box:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-top-color: #c2e1f5;
+	border-width: 36px;
+	margin-left: -36px;
 }
