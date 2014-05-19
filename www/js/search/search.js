@@ -34,6 +34,7 @@ angular.module('myApp.search', [
 				config.params.type = type;
 			}
 			$http.jsonp(url, config).success(function(results) {
+				console.log(results);
 				callback(results);
 			});
 		}
