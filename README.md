@@ -36,10 +36,11 @@ $ ionic emulate android
 Author
 ------
 
-LabsterX
-Website: http://www.labsterx.com
-Twitter: https://twitter.com/labsterx
-Github: https://github.com/labsterx
+**LabsterX**
+
+* Website: http://www.labsterx.com
+* Twitter: https://twitter.com/labsterx
+* Github: https://github.com/labsterx
 
 License
 ----
