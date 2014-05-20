@@ -67,6 +67,10 @@ i.header-nav-icon {
     background-position: center bottom;
 }
 
+.big-padding {
+	padding: 20px;
+}
+
 /* Search */
 
 .search_type_select {

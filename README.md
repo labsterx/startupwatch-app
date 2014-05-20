@@ -5,7 +5,7 @@ Startup Watch is a mobile app that provides information on startup companies aro
 
 This app is an HTML5 hybrid app developed using the [Ionic Framework](http://ionicframework.com/), which is optimized for AngularJS. 
 
-The date source for this app is the [AngelList API](https://angel.co/api).
+The data source for this app is the [AngelList API](https://angel.co/api).
 
 
 Installation

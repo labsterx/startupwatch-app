@@ -29,6 +29,15 @@ angular.module('myApp', [
       controller: 'AppCtrl'
     })
 
+    .state('app.about', {
+      url: "/about",
+      views: {
+        'menuContent' :{
+          templateUrl: "js/pages/about.html"
+        }
+      }
+    });
+
     $urlRouterProvider.otherwise('/app/search');
 
 });
