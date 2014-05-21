@@ -26,6 +26,10 @@ a.no_underline {
 	text-decoration: none;
 }
 
+.underlined {
+	text-decoration: underline;
+}
+
 i.input-clear-icon {
 	position: absolute;
 	font-size: 22px;

@@ -70,15 +70,15 @@
 
   	<div class="item tabs tabs-secondary tabs-icon-left">
 
-  		<a ng-show="!!startup.company_url" class="tab-item" href="{{startup.company_url}}">
+  		<a ng-show="!!startup.company_url" class="tab-item" ng-click="openNewBrowser(startup.company_url)">
       		<i class="icon icon-link ion-android-earth"></i> Website
     	</a>
 
-   		<a ng-show="!!startup.twitter_url" class="tab-item" href="{{startup.twitter_url}}">
+   		<a ng-show="!!startup.twitter_url" class="tab-item" ng-click="openNewBrowser(startup.twitter_url)">
       		<i class="icon icon-link ion-social-twitter"></i> Twitter
     	</a>
 
-   		<a ng-show="!!startup.blog_url" class="tab-item" href="{{startup.blog_url}}">
+   		<a ng-show="!!startup.blog_url" class="tab-item" ng-click="openNewBrowser(startup.blog_url)">
       		<i class="icon icon-link ion-social-rss"></i> Blog
     	</a>
 
