@@ -22,12 +22,16 @@ angular.module('myApp', [
       showLocationBar = true;
     }
     if (showLocationBar) {
-      ref = window.open(url, '_blank', 'location=yes');
+      ref = window.open(url, '_blank', 'location=yes,toolbar=yes');
     }
     else {
       ref = window.open(url, '_blank');
     }
+    ref.addEventListener('loadstart', function() { 
+      alert(event.url); 
+    });
     ref.addEventListener('exit', function() {
+      alert('exit');
       navigator.app.exitApp();
     });
   }
