@@ -17,15 +17,19 @@ angular.module('myApp', [
 .controller('AppCtrl', ['$scope', function($scope) {
 
   $scope.openNewBrowser= function(url, showLocationBar) {
+    var ref;
     if (typeof showLocationBar === 'undefined') { 
       showLocationBar = true;
     }
     if (showLocationBar) {
-      window.open(url, '_blank', 'location=yes');
+      ref = window.open(url, '_blank', 'location=yes');
     }
     else {
-      window.open(url, '_blank');
+      ref = window.open(url, '_blank');
     }
+    ref.addEventListener('exit', function() {
+      navigator.app.exitApp();
+    });
   }
 
 }])
