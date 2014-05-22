@@ -1,1 +1,42 @@
-../config.xml
+<?xml version='1.0' encoding='utf-8'?>
+<widget 
+    id="com.labsterx.app.startupwatch" 
+    version="0.1.1" 
+    xmlns="http://www.w3.org/ns/widgets" 
+    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+
+    <name>Startup Watch</name>
+
+    <description>
+        This mobile app provides information on startup companies around the world, including startup company profiles, startup job search etc. The information is provided by AngelList (https://angel.co).
+    </description>
+
+    <author email="labsterx@gmail.com" href="http://www.labsterx.com/">
+      LabsterX
+    </author>
+
+    <content src="index.html" />
+    
+    <access origin="*" />
+    
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    
+    <feature name="StatusBar">
+      <param name="ios-package" value="CDVStatusBar" onload="true" />
+    </feature>
+    
+    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
+    <feature name="InAppBrowser">
+        <param name="ios-package" value="CDVInAppBrowser" />
+    </feature>
+    <feature name="InAppBrowser" />
+
+    <preference name="permissions" value="none"/>
+
+</widget>
