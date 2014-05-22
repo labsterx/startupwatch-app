@@ -28,7 +28,7 @@
       <param name="ios-package" value="CDVStatusBar" onload="true" />
     </feature>
     
-    <gap:plugin name="org.apache.cordova.inappbrowser" />
+    <gap:plugin name="InAppBrowser" value="org.apache.cordova.core.InAppBrowser" />
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
