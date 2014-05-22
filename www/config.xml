@@ -17,6 +17,8 @@
 
     <content src="index.html" />
     
+    <icon src="app_icon.png" />
+
     <access origin="*" />
     
     <preference name="fullscreen" value="true" />

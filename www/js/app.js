@@ -27,15 +27,11 @@ angular.module('myApp', [
     else {
       ref = window.open(url, '_blank');
     }
-    ref.addEventListener('loadstart', function(event) {
-      console.log(event.url);
-      alert(event.url); 
-    });
-    ref.addEventListener('exit', function() {
-      console.log('exit');
-      alert('exit');
-      ref.close();
-    });
+    // ref.addEventListener('loadstart', function(event) {
+    // });
+    // ref.addEventListener('exit', function() {
+    //   ref.close();
+    // });
   }
 
 }])
