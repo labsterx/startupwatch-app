@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget 
-    id="com.labsterx.app.startupwatch" 
-    version="0.1.1" 
-    xmlns="http://www.w3.org/ns/widgets" 
-    xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "com.labsterx.app.startupwatch"
+        versionCode = "1" 
+        version     = "0.1.1" >
 
     <name>Startup Watch</name>
 
@@ -28,7 +28,7 @@
       <param name="ios-package" value="CDVStatusBar" onload="true" />
     </feature>
     
-    <gap:plugin name="InAppBrowser" value="org.apache.cordova.core.InAppBrowser" />
+    <gap:plugin name="org.apache.cordova.inappbrowser" version="0.1.0" />
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
