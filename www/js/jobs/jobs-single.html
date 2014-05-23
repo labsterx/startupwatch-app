@@ -1,7 +1,7 @@
 <ion-view title="Job">
   
   <ng-include src="'js/components/header.html'"></ng-include>  
-    
+
   <ion-content class="has-header">
 
 
@@ -73,15 +73,15 @@
 
     <div class="item tabs tabs-secondary tabs-icon-left">
 
-      <a ng-show="!!job.startup.company_url" class="tab-item" ng-click="openNewBrowser(job.startup.company_url)">
+      <a ng-show="!!job.startup.company_url" class="tab-item" browse-to="{{job.startup.company_url}}">
           <i class="icon icon-link ion-android-earth"></i> Comapany Site
       </a>
 
-      <a ng-show="!!job.startup.twitter_url" class="tab-item" ng-click="openNewBrowser(job.startup.twitter_url)">
+      <a ng-show="!!job.startup.twitter_url" class="tab-item" browse-to="{{job.startup.twitter_url}}">
           <i class="icon icon-link ion-social-twitter"></i> Twitter
       </a>
 
-      <a ng-show="!!job.startup.blog_url" class="tab-item" ng-click="openNewBrowser(job.startup.blog_url)">
+      <a ng-show="!!job.startup.blog_url" class="tab-item" browse-to="{{job.startup.blog_url}}">
           <i class="icon icon-link ion-social-rss"></i> Blog
       </a>
 

@@ -16,24 +16,6 @@ angular.module('myApp', [
 
 .controller('AppCtrl', ['$scope', '$state', function($scope, $state) {
 
-  $scope.openNewBrowser= function(url, showLocationBar) {
-    var ref;
-    if (typeof showLocationBar === 'undefined') { 
-      showLocationBar = true;
-    }
-    if (showLocationBar) {
-      ref = window.open(url, '_blank', 'location=yes,toolbar=yes');
-    }
-    else {
-      ref = window.open(url, '_blank');
-    }
-    // ref.addEventListener('loadstart', function(event) {
-    // });
-    // ref.addEventListener('exit', function() {
-    //   ref.close();
-    // });
-  }
-
 }])
 
 .config(function($stateProvider, $urlRouterProvider) {
