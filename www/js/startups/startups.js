@@ -1,5 +1,5 @@
 angular.module('myApp.startups', [
-	'myApp.config',
+	'myApp.config'
 ])
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -86,30 +86,48 @@ angular.module('myApp.startups', [
 
 	return {
 
-		listStartups: function (page, callback) {
+		listStartups: function (page, callback, errCallback) {
 			var tag_earth = '1643';
 			var url = 'https://api.angel.co/1/tags/' + tag_earth + '/startups' + '?page=' + page + '&order=desc&callback=JSON_CALLBACK';
 			// console.log('Calling ' + url);
-			$http.jsonp(url).success(function(data) {
+			$http.jsonp(url)
+			.success(function(data) {
 				var results = processListResult(data);
 				callback(results);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		},
 
-		listStartupsByTag: function (page, tagId, callback) {
+		listStartupsByTag: function (page, tagId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/tags/' + tagId + '/startups'  + '?page=' + page + '&callback=JSON_CALLBACK';
 			// console.log(url);
-			$http.jsonp(url).success(function(data) {
+			$http.jsonp(url)
+			.success(function(data) {
 				var results = processListResult(data, tagId);
 				callback(results);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		},
 
-		getStartup: function (startupId, callback) {
+		getStartup: function (startupId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/startups/' + startupId + '?callback=JSON_CALLBACK';
-			$http.jsonp(url).success(function(results) {
+			$http.jsonp(url)
+			.success(function(results) {
 				callback(results);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		},
 
 	};
@@ -117,8 +135,8 @@ angular.module('myApp.startups', [
 })
 
 .controller('StartupsController', [
-	'$scope', 'StartupsService', '$ionicLoading', '$location', 'appConfig', 
-	function ($scope, StartupsService, $ionicLoading, $location, appConfig) {
+	'$scope', 'StartupsService', '$ionicLoading', '$location', 'appConfig', '$ionicPopup',
+	function ($scope, StartupsService, $ionicLoading, $location, appConfig, $ionicPopup) {
 
 		$scope.startups = [];
 		$scope.meta = {};
@@ -145,6 +163,10 @@ angular.module('myApp.startups', [
 				$ionicLoading.hide();
 				$scope.startups = $scope.startups.concat(results.startups);
 				$scope.meta = results.meta;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+			}, function() {
+				$ionicLoading.hide();
+				$ionicPopup.alert(appConfig.loadingErrorPopup);
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};
@@ -192,6 +214,10 @@ angular.module('myApp.startups', [
 				$ionicLoading.hide();
 				$scope.startups = $scope.startups.concat(results.startups);
 				$scope.meta = results.meta;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+			}, function() {
+				$ionicLoading.hide();
+				$ionicPopup.alert(appConfig.loadingErrorPopup);
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};

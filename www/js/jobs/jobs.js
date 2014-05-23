@@ -121,47 +121,71 @@ angular.module('myApp.jobs', [
 
 	return {
 
-		listJobs: function (page, callback) {
+		listJobs: function (page, callback, errCallback) {
 			var url = 'https://api.angel.co/1/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
 			// console.log('Calling ' + url);
-			$http.jsonp(url).success(function(data) {
+			$http.jsonp(url)
+			.success(function(data) {
 				var results = processListResult(data);
 				callback(results);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		},
 
-		listJobsByTag: function (page, tagId, callback) {
+		listJobsByTag: function (page, tagId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/tags/' + tagId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
 			// console.log(url);
-			$http.jsonp(url).success(function(results) {
+			$http.jsonp(url)
+			.success(function(results) {
 				var list = processListResult(results, tagId);
 				callback(list);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		},	
 
-		listJobsByStartup: function (page, startupId, callback) {
+		listJobsByStartup: function (page, startupId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/startups/' + startupId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
 			console.log('listJobsByStartup. url=' + url);
-			$http.jsonp(url).success(function(results) {
+			$http.jsonp(url)
+			.success(function(results) {
 				var list = processListResult(results);
 				callback(list);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		},
 
-		getJob: function (jobId, callback) {
+		getJob: function (jobId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/jobs/' + jobId + '?callback=JSON_CALLBACK';
-			$http.jsonp(url).success(function(results) {
+			$http.jsonp(url)
+			.success(function(results) {
 				var detail = processJobResult(results);
 				callback(detail);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		}
 	};
 
 })
 
 .controller('JobsController', [
-	'$scope', 'JobsService', '$ionicLoading', '$location', 'appConfig', 
-	function ($scope, JobsService, $ionicLoading, $location, appConfig) {
+	'$scope', 'JobsService', '$ionicLoading', '$location', 'appConfig', '$ionicPopup',
+	function ($scope, JobsService, $ionicLoading, $location, appConfig, $ionicPopup) {
 
 		$scope.jobs = [];
 		$scope.meta = {};
@@ -188,6 +212,10 @@ angular.module('myApp.jobs', [
 				$scope.jobs = $scope.jobs.concat(results.jobs);
 				$scope.meta = results.meta;
 				$scope.$broadcast('scroll.infiniteScrollComplete');
+			}, function() {
+				$ionicLoading.hide();
+				$ionicPopup.alert(appConfig.loadingErrorPopup);
+				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};
 
@@ -205,8 +233,8 @@ angular.module('myApp.jobs', [
 ])
 
 .controller('JobsTagController', [
-	'$scope', 'JobsService', '$stateParams', '$ionicLoading', '$location', 'appConfig',
-	function ($scope, JobsService, $stateParams, $ionicLoading, $location, appConfig) {
+	'$scope', 'JobsService', '$stateParams', '$ionicLoading', '$location', 'appConfig', '$ionicPopup',
+	function ($scope, JobsService, $stateParams, $ionicLoading, $location, appConfig, $ionicPopup) {
 
 		$scope.jobs = [];
 		$scope.meta = {};
@@ -234,6 +262,10 @@ angular.module('myApp.jobs', [
 				$ionicLoading.hide();
 				$scope.jobs = $scope.jobs.concat(results.jobs);
 				$scope.meta = results.meta;
+				$scope.$broadcast('scroll.infiniteScrollComplete');
+			}, function() {
+				$ionicLoading.hide();
+				$ionicPopup.alert(appConfig.loadingErrorPopup);
 				$scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};

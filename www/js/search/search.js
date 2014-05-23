@@ -23,7 +23,7 @@ angular.module('myApp.search', [
 
 	return {
 
-		search: function (query, type, callback) {
+		search: function (query, type, callback, errCallback) {
 			var url = 'https://api.angel.co/1/search' + '?callback=JSON_CALLBACK';
 			var config = {
 				params: {
@@ -33,10 +33,16 @@ angular.module('myApp.search', [
 			if (type) {
 				config.params.type = type;
 			}
-			$http.jsonp(url, config).success(function(results) {
+			$http.jsonp(url, config)
+			.success(function(results) {
 				console.log(results);
 				callback(results);
-			});
+			})
+			.error(function(data, status, headers, config) {
+		      	if (errCallback) {
+		      		errCallback();
+		      	}
+		    });
 		}
 
 	};
@@ -44,8 +50,8 @@ angular.module('myApp.search', [
 })
 
 .controller('SearchController', [
-	'$scope', 'SearchService', '$ionicLoading', '$location', 'appConfig', 
-	function ($scope, SearchService, $ionicLoading, $location, appConfig) {
+	'$scope', 'SearchService', '$ionicLoading', '$location', 'appConfig', '$ionicPopup',
+	function ($scope, SearchService, $ionicLoading, $location, appConfig, $ionicPopup) {
 
 		$scope.search_type = "startup";
 
@@ -129,6 +135,10 @@ angular.module('myApp.search', [
 						$scope.no_startup_results = false;	
 					}
 				}
+			}, function() {
+				$ionicLoading.hide();
+				$ionicPopup.alert(appConfig.loadingErrorPopup);
+				// $scope.$broadcast('scroll.infiniteScrollComplete');
 			});
 		};
 
@@ -175,6 +185,9 @@ angular.module('myApp.search', [
 						$scope.no_job_results = false;	
 					}
 				}
+			}, function() {
+				$ionicLoading.hide();
+				$ionicPopup.alert(appConfig.loadingErrorPopup);
 			});
 		};
 
