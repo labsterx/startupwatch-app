@@ -35,7 +35,7 @@ angular.module('myApp.search', [
 			}
 			$http.jsonp(url, config)
 			.success(function(results) {
-				console.log(results);
+				// console.log(results);
 				callback(results);
 			})
 			.error(function(data, status, headers, config) {

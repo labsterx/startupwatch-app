@@ -14,7 +14,7 @@ angular.module('myApp', [
     });
 })
 
-.controller('AppCtrl', ['$scope', function($scope) {
+.controller('AppCtrl', ['$scope', '$state', function($scope, $state) {
 
   $scope.openNewBrowser= function(url, showLocationBar) {
     var ref;
