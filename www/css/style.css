@@ -104,9 +104,12 @@ i.header-nav-icon {
 }
 
 .search_result_list {
-	margin-bottom: 20px !important;
+	margin-bottom: 5px !important;
 }
 
+.search_result_list .item:last-child {
+	margin-bottom: 45px !important;
+}
 
 .page-title {
 	margin: 8px auto;
@@ -180,8 +183,8 @@ i.header-nav-icon {
 
 .card .list-item-title {
 	border: 0;
-	background-color: #F9F9F9;
-	padding: 10px;
+	background-color: #FFF;
+	padding: 10px 13px 0px 13px;
 	border-top-left-radius: 0 !important;
 	border-top-right-radius: 0 !important;
 }
@@ -235,7 +238,7 @@ img.startup-list-logo {
 	top: 10px; 
 	left: 10px; 
 	right: 10px;
-	height: 180px;
+	height: 166px;
 	margin: 5px;
 }	
 

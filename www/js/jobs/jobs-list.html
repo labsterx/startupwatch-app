@@ -8,11 +8,10 @@
 
   <div class="list">
 
-    <div class="card job-list-item" collection-repeat="job in jobs" collection-item-width="'100%'" collection-item-height="194" ng-click="showJobPage(job)">
+    <div class="card job-list-item" collection-repeat="job in jobs" collection-item-width="'100%'" collection-item-height="180" ng-click="showJobPage(job)">
       
-      <div class="item item-divider item-icon-right list-item-title">
+      <div class="item item-divider list-item-title">
         {{job.title}}
-        <i class="icon ion-ios7-arrow-right"></i>
       </div>
 
       <div class="item list-item-content item-thumbnail-left">
@@ -64,6 +63,8 @@
 
   <ion-infinite-scroll ng-if="!meta.page || meta.page < meta.last_page" icon="" on-infinite="loadJobs()" distance="1%">
   </ion-infinite-scroll>
+
+
 
   </ion-content>
 
