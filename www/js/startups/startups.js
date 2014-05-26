@@ -37,7 +37,7 @@ angular.module('myApp.startups', [
 
 })
 
-.factory('StartupsService', function ($http, $location) {
+.factory('StartupsService', function ($http, $location, URLCache) {
 
 	'use strict';
 
@@ -90,31 +90,46 @@ angular.module('myApp.startups', [
 			var tag_earth = '1643';
 			var url = 'https://api.angel.co/1/tags/' + tag_earth + '/startups' + '?page=' + page + '&order=desc&callback=JSON_CALLBACK';
 			// console.log('Calling ' + url);
-			$http.jsonp(url)
-			.success(function(data) {
-				var results = processListResult(data);
-				callback(results);
-			})
-			.error(function(data, status, headers, config) {
-		      	if (errCallback) {
-		      		errCallback();
-		      	}
-		    });
+			var cached_data = URLCache.getCache(url);
+			if (cached_data) {
+				callback(cached_data);
+			}
+			else {
+				console.log('not cached');
+				$http.jsonp(url)
+				.success(function(data) {
+					var results = processListResult(data);
+					URLCache.setCache(url, results);
+					callback(results);
+				})
+				.error(function(data, status, headers, config) {
+			      	if (errCallback) {
+			      		errCallback();
+			      	}
+			    });				
+			}
 		},
 
 		listStartupsByTag: function (page, tagId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/tags/' + tagId + '/startups'  + '?page=' + page + '&callback=JSON_CALLBACK';
 			// console.log(url);
-			$http.jsonp(url)
-			.success(function(data) {
-				var results = processListResult(data, tagId);
-				callback(results);
-			})
-			.error(function(data, status, headers, config) {
-		      	if (errCallback) {
-		      		errCallback();
-		      	}
-		    });
+			var cached_data = URLCache.getCache(url);
+			if (cached_data) {
+				callback(cached_data);
+			}
+			else {
+				$http.jsonp(url)
+				.success(function(data) {
+					var results = processListResult(data, tagId);
+					URLCache.setCache(url, results);				
+					callback(results);
+				})
+				.error(function(data, status, headers, config) {
+			      	if (errCallback) {
+			      		errCallback();
+			      	}
+			    });
+			}
 		},
 
 		getStartup: function (startupId, callback, errCallback) {

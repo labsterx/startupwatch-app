@@ -57,6 +57,60 @@ angular.module('myApp', [
    });
   }
  }
+})
+
+.factory('URLCache', function($cacheFactory) {
+
+    var cache_time = 60;    // in seconds;
+
+    function getTime() {
+        var time = parseInt((new Date).getTime() / 1000);
+        return time;
+    }
+
+    function getPageNumberFromUrl(url) {
+        var regexp = /page=(\d+)/i;
+        var match = regexp.exec(url);
+        var pageNo = match[1];
+        return pageNo;
+    }
+
+    return {
+
+        getCache: function(url) {
+
+            if (getPageNumberFromUrl(url) > 1) {
+                return false;
+            }
+            var cache = $cacheFactory.get(url);
+            if (cache && cache.get('time') > getTime() - cache_time) {
+                // console.log('cached');
+                var data = cache.get('data');
+                return data;
+            }
+            else {
+                return false;
+            }
+
+        },
+
+        setCache: function(url, data) {
+            if (getPageNumberFromUrl(url) > 1) {
+                return false;
+            }
+            var cache = $cacheFactory.get(url); 
+            if (!cache) {
+                cache = $cacheFactory(url);
+            }
+            var now = getTime();
+            cache.remove('data');
+            cache.put('data', data);
+            cache.remove('time');
+            cache.put('time', now);
+        }
+
+    }
+
 });
 
 

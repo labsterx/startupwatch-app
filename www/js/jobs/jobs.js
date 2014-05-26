@@ -47,7 +47,7 @@ angular.module('myApp.jobs', [
 
 })
 
-.factory('JobsService', function ($http) {
+.factory('JobsService', function ($http, URLCache) {
 
 	'use strict';
 
@@ -124,46 +124,67 @@ angular.module('myApp.jobs', [
 		listJobs: function (page, callback, errCallback) {
 			var url = 'https://api.angel.co/1/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
 			// console.log('Calling ' + url);
-			$http.jsonp(url)
-			.success(function(data) {
-				var results = processListResult(data);
-				callback(results);
-			})
-			.error(function(data, status, headers, config) {
-		      	if (errCallback) {
-		      		errCallback();
-		      	}
-		    });
+			var cached_data = URLCache.getCache(url);
+			if (cached_data) {
+				callback(cached_data);
+			}
+			else {
+				$http.jsonp(url)
+				.success(function(data) {
+					var results = processListResult(data);
+					URLCache.setCache(url, results);
+					callback(results);
+				})
+				.error(function(data, status, headers, config) {
+			      	if (errCallback) {
+			      		errCallback();
+			      	}
+			    });
+			}
 		},
 
 		listJobsByTag: function (page, tagId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/tags/' + tagId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
 			// console.log(url);
-			$http.jsonp(url)
-			.success(function(results) {
-				var list = processListResult(results, tagId);
-				callback(list);
-			})
-			.error(function(data, status, headers, config) {
-		      	if (errCallback) {
-		      		errCallback();
-		      	}
-		    });
+			var cached_data = URLCache.getCache(url);
+			if (cached_data) {
+				callback(cached_data);
+			}
+			else {			
+				$http.jsonp(url)
+				.success(function(results) {
+					var list = processListResult(results, tagId);
+					URLCache.setCache(url, list);
+					callback(list);
+				})
+				.error(function(data, status, headers, config) {
+			      	if (errCallback) {
+			      		errCallback();
+			      	}
+			    });
+			}
 		},	
 
 		listJobsByStartup: function (page, startupId, callback, errCallback) {
 			var url = 'https://api.angel.co/1/startups/' + startupId + '/jobs' + '?page=' + page + '&callback=JSON_CALLBACK';
-			console.log('listJobsByStartup. url=' + url);
-			$http.jsonp(url)
-			.success(function(results) {
-				var list = processListResult(results);
-				callback(list);
-			})
-			.error(function(data, status, headers, config) {
-		      	if (errCallback) {
-		      		errCallback();
-		      	}
-		    });
+			// console.log('listJobsByStartup. url=' + url);
+			var cached_data = URLCache.getCache(url);
+			if (cached_data) {
+				callback(cached_data);
+			}
+			else {
+				$http.jsonp(url)
+				.success(function(results) {
+					var list = processListResult(results);
+					URLCache.setCache(url, list);
+					callback(list);
+				})
+				.error(function(data, status, headers, config) {
+			      	if (errCallback) {
+			      		errCallback();
+			      	}
+			    });				
+			}
 		},
 
 		getJob: function (jobId, callback, errCallback) {
