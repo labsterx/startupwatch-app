@@ -1,12 +1,15 @@
 Startup Watch
 =========
 
-Startup Watch is a mobile app that provides information on startup companies around the world, including startup company profiles, startup job search etc. The information is provided by [AngelList](https://angel.co).
+Startup Watch is a mobile app with information on startup companies and startup jobs around the world. With this app you can view new startup listings and search for startups by location and market type. You can also view new startup job openings and search for jobs by location.
 
-This app is an HTML5 hybrid app developed using the [Ionic Framework](http://ionicframework.com/), which is optimized for AngularJS. 
+This app is an HTML5 hybrid app written in JavaScript, developed with AngularJS and the Ionic framework. The data source for this app is the [AngelList API](https://angel.co/api).
 
-The data source for this app is the [AngelList API](https://angel.co/api).
+You can download the Android version of this app from the [Google Play Store](https://play.google.com/store/apps/details?id=com.labsterx.app.startupwatch).
 
+This app can also be tried out using web browers by serving the source code under the www directory on a web server.
+
+The official website for this app is at: [http://www.labsterx.com/projects/startup-watch/](http://www.labsterx.com/projects/startup-watch/).
 
 Installation
 --------------
