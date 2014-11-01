@@ -2,8 +2,10 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "com.labsterx.app.startupwatch"
-        versionCode = "3" 
-        version     = "0.3.0" >
+        versionCode = "4" 
+        version     = "0.3.1" >
+
+    <preference name="phonegap-version" value="3.6.3" />
 
     <name>Startup Watch</name>
 
